@@ -195,14 +195,14 @@ namespace MyRat
   sorry
 
 -- `0` notation (the equiv class of (0,1))
-instance : Zero MyRat where zero := ⟦(0, ⟨1, one_ne_zero⟩)⟧
+instance zero : Zero MyRat where zero := ⟦(0, ⟨1, one_ne_zero⟩)⟧
 
 -- lemma stating definition of zero
 lemma zero_def : (0 : MyRat) = ⟦(0, ⟨1, one_ne_zero⟩)⟧ := by
   sorry
 
 -- `1` notation (the equiv class of (1,1))
-instance : One MyRat where one := ⟦(1, ⟨1, one_ne_zero⟩)⟧
+instance one : One MyRat where one := ⟦(1, ⟨1, one_ne_zero⟩)⟧
 
 -- lemma stating definition of one
 lemma one_def : (1 : MyRat) = ⟦(1, ⟨1, one_ne_zero⟩)⟧ := by
