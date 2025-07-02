@@ -5,16 +5,17 @@ type called $\Z$, we define a new type called $\MyInt$ that will be another defi
 $\MyInt$ will be a quotient of a type called $\MyPreint$.
 
 \begin{definition}
-    \label{def:MyPreint}
+    \label{MyPreint}
     \lean{MyPreint}
     \leanok
     Let $\MyPreint$ be $\N \times \N$
 \end{definition}
 
 \begin{definition}
-    \label{def:R}
+    \label{MyPreint.R}
     \lean{MyPreint.R}
     \leanok
+    \uses{MyPreint}
 We define a relation $R$ on $\MyPreint$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
 \[
 a + d = b + c
@@ -23,37 +24,37 @@ a + d = b + c
 
 \begin{lemma}
 $R$ is a reflexive relation.
-    \label{lemma:reflexive}
+    \label{MyPreint.R_refl}
     \lean{MyPreint.R_refl}
     \leanok
 \end{lemma}
 \begin{proof}
     \leanok
-    \uses{def:R}
+    \uses{MyPreint.R}
     This follows by commutativity of addition in $\N$.
 \end{proof}
 
 \begin{lemma}
 $R$ is a symmetric relation.
-    \label{lemma:symmetric}
+    \label{MyPreint.R_symm}
     \lean{MyPreint.R_symm}
     \leanok
 \end{lemma}
 \begin{proof}
     \leanok
-    \uses{def:R}
+    \uses{MyPreint.R}
     This follows by commutativity of addition in $\N$.
 \end{proof}
 
 \begin{lemma}
 $R$ is a transitive relation.
-    \label{lemma:transitive}
+    \label{MyPreint.R_trans}
     \lean{MyPreint.R_trans}
     \leanok
 \end{lemma}
 \begin{proof}
     \leanok
-    \uses{def:R}
+    \uses{MyPreint.R}
     Let $x$, $y$ and $z$ in $\MyPreint$ such that $x R y$ and $y R z$. We can write $x = (a,b)$ and similarly
     for $y = (c,d)$ and $z = (e,f)$. By assumption we have $a+d=b+c$ and $c+f=d+e$. Adding these equalities we get
     \[
@@ -64,4 +65,33 @@ $R$ is a transitive relation.
     a+f = b + e
     \]
     as wanted.
+\end{proof}
+
+It follows in particular that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
+$x R y$.
+
+\begin{definition}
+    \label{MyPreint.neg}
+    \lean{MyPreint.neg}
+    \leanok
+We define an operation, called \emph{negation} on $\MyPreint$ as follows: the negation of $x = (a,b)$ is
+$(b,a)$:
+\[
+-x = -(a,b) = (b,a)
+\]
+\end{definition}
+
+\begin{lemma}
+    \label{neg_quotient}
+    \lean{neg_quotient}
+    \leanok
+If $x \approx y$ then $-x \approx -y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPreint.neg}
+Let $x = (a,b)$ and $y = (c,d)$, so by assumption $a + d = b + c$. Be definition we have
+\[
+-x=-(a,b)=(b,a) \mbox{ and } -y=-(c,d)=(d,c)
+\]
+We need to show $b+c=d+a$, which follows immediately from $a + d = b + c$.
 \end{proof}
