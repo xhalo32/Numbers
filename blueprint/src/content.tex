@@ -339,6 +339,18 @@ Let $x$ and $y$ in $\MyInt$ such that $x \neq 0$ and $y \neq 0$. Then $x*y \neq 
     It is enough to prove that, for all $a$, $b$, $c$ and $d$ in $\N$ such that $a \neq b$ and $c \neq d$ we have $a*c+b*d\neq a*d+b*c$. If this is not the case we must have $a = b$ or $c = d$. (Can you see how to prove this in $\N$? You cannot use subtraction!) and we are done.
 \end{proof}
 
+\begin{lemma}
+    \label{MyInt.eq_of_mul_eq_mul_right}
+    \lean{MyInt.eq_of_mul_eq_mul_right}
+    \leanok
+Let $x$, $y$ and $z$ in $\MyInt$ such that $x \neq 0$ and $y * x = z * x$. Then $y = z$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyInt.mul_ne_zero}
+We have $0 = y*x-z*x=(y-z)*x$. Since $x \neq 0$ we have by Lemma~\ref{MyInt.mul_ne_zero} that $y-z=0$ and hence $y=z$.
+\end{proof}
+
 \subsection{\texorpdfstring{The inclusion $i \colon \N \to \MyInt$}{The inclusion}}
 \begin{definition}
     \label{MyInt.i}
@@ -576,7 +588,7 @@ It follows that $\leq$ is an order relation.
 
 \chapter{The rationals}
 
-We can now define the rationals, starting with the integers. Rather than using our copy of the integers it is convenient to use the ``standard'' version $\Z$ already defined in \Lean{} (so all the relevant results are there).
+We can now define the rationals, starting with our copy of the integers $MyInt$.
 
 We follow a similar path to the one for $\MyInt$.
 
@@ -588,6 +600,7 @@ $\MyRat$ will be a quotient of a type called $\MyPrerat$.
     \label{MyPrerat}
     \lean{MyPrerat}
     \leanok
+    \uses{MyInt}
     Let $\MyPrerat$ be $\Z \times \Z \backslash \{0\}$
 \end{definition}
 
@@ -648,7 +661,7 @@ $x R y$.
 \begin{proof}
     \leanok
     \uses{MyPrerat.R_refl, MyPrerat.R_symm, MyPrerat.R_trans}
-Clear from \ref{MyPrerat.R_refl}, \ref{MyPrerat.R_symm} and \ref{MyPrerat.R_trans}.
+Clear from Lemma~\ref{MyPrerat.R_refl}, Lemma~\ref{MyPrerat.R_symm} and Lemma~\ref{MyPrerat.R_trans}.
 \end{proof}
 
 \begin{definition}
