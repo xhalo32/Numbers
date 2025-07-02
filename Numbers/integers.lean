@@ -346,9 +346,6 @@ lemma zero_le_one : (0 : MyInt) ≤ 1 := by
 lemma add_le_add_left (x y : MyInt) (h : x ≤ y) (z : MyInt) : z + x ≤ z + y := by
   sorry
 
-lemma aux_mul_lemma (a b c d : ℕ) (h : a * d + b * c = a * c + b * d) : a = b ∨ c = d := by
-  sorry
-
 lemma mul_pos (x y : MyInt) (hx : 0 < x) (hy : 0 < y) : 0 < x * y := by
   sorry
 
