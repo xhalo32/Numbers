@@ -2,6 +2,9 @@
 
 We construct the integers starting from the natural numbers $\Z$. Since \texttt{lean} already has a
 type called $\Z$, we define a new type called $\MyInt$ that will be another definition of the integers.
+
+\section{The \emph{preintegers}}
+
 $\MyInt$ will be a quotient of a type called $\MyPreint$.
 
 \begin{definition}
@@ -67,8 +70,17 @@ $R$ is a transitive relation.
     as wanted.
 \end{proof}
 
-It follows in particular that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
+\begin{lemma}
+    \label{MyPreint.R_equiv}
+    \lean{MyPreint.R_equiv}
+We have that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
 $x R y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPreint.R_refl, MyPreint.R_symm, MyPreint.R_trans}
+Clear from \ref{MyPreint.R_refl}, \ref{MyPreint.R_symm} and \ref{MyPreint.R_trans}.
+\end{proof}
 
 \begin{definition}
     \label{MyPreint.neg}
@@ -89,7 +101,8 @@ $(b,a)$:
 If $x \approx x'$, then $-x \approx -x'$.
 \end{lemma}
 \begin{proof}
-    \uses{MyPreint.neg}
+\uses{MyPreint.neg}
+\leanok
 Let $x = (a,b)$ and $x' = (a',b')$, so by assumption $a + b' = b + a'$. By definition we have
 \[
 -x=-(a,b)=(b,a) \mbox{ and } -x'=-(a',b')=(b',a')
@@ -116,7 +129,8 @@ x + y = (a,b) + (c,d) = (a+c, b + d)
 If $x \approx x'$ and $y \approx y'$, then $x + y \approx x' + y'$.
 \end{lemma}
 \begin{proof}
-    \uses{MyPreint.add}
+\uses{MyPreint.add}
+\leanok
 Let $x = (a,b)$, $y = (c,d)$, $x' = (a',b')$ and $y' = (c',d')$ such that $x \approx x'$ and $y \approx y'$. by assumption we have
 \[
 a + b' = b + a' \mbox{ and } c + d' = d + c'
@@ -151,6 +165,7 @@ If $x \approx x'$ and $y \approx y'$, then $x * y \approx x' * y'$.
 \end{lemma}
 \begin{proof}
 \uses{MyPreint.mul}
+\leanok
 Let $x = (a,b)$, $y = (c,d)$, $x' = (a',b')$ and $y' = (c',d')$ such that $x \approx x'$ and $y \approx y'$. by assumption we have
 \[
 a + b' = b + a' \mbox{ and } c + d' = d + c'
@@ -183,5 +198,374 @@ Adding the last two equations and cancelling the terms appearing on both sides w
 \[
 b' * c' + b * d + a * c + a' * d' =  a' * c' + b * c + a * d + b' * d'
 \]
-that is $x * y = \approx  x'*y'$.
+that is $x * y \approx  x'*y'$.
+\end{proof}
+
+\section{The integers}
+
+\subsection{Definitions}
+
+\begin{definition}
+    \label{MyInt}
+    \lean{MyInt}
+    \leanok
+    \uses{MyPreint.R_equiv}
+    We define our integers $\MyInt$ as
+\[
+\MyInt = \MyPreint \, / \approx
+\]
+We will write $\llbracket (a, b) \rrbracket$ for the class of $(a,b)$.
+\end{definition}
+
+\begin{definition}
+    \label{MyInt.zero}
+    \lean{MyInt.zero}
+    \uses{MyPreint.R_equiv}
+    \leanok
+We define the zero of $\MyInt$, denoted $0$ as the class of $(0,0)$.
+\end{definition}
+
+\begin{definition}
+    \label{MyInt.one}
+    \lean{MyInt.one}
+    \uses{MyPreint.R_equiv}
+    \leanok
+We define the one of $\MyInt$, denoted $1$ as the class of $(1,0)$.
+\end{definition}
+
+\subsection{Commutative ring structure}
+
+\begin{definition}
+    \label{MyInt.neg}
+    \lean{MyInt.neg}
+    \uses{MyPreint.R_equiv, MyPreint.neg_quotient}
+    \leanok
+We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+\[
+-x = \llbracket -(a, b) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPreint.neg_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyInt.add}
+    \lean{MyInt.add}
+    \uses{MyPreint.R_equiv, MyPreint.add_quotient}
+    \leanok
+We define the addition of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x + y = \llbracket (a, b)+(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPreint.add_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyInt.mul}
+    \lean{MyInt.mul}
+    \uses{MyPreint.R_equiv, MyPreint.mul_quotient}
+    \leanok
+We define the multiplication of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x * y = \llbracket (a, b)*(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPreint.mul_quotient} this is well defined.
+\end{definition}
+
+\begin{lemma}
+    \label{MyInt.add_assoc}
+    \lean{MyInt.add_assoc}
+    \leanok
+    Addition on $\MyInt$ is associative.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.add}
+    \leanok
+To prove the lemma it is enough to prove that, for all $a$, $b$, $c$, $d$, $e$ and $f$ in $\N$, we have
+\[
+(\llbracket (a, b) \rrbracket+ \llbracket (c, d) \rrbracket) + \llbracket (e, f) \rrbracket = \llbracket (a, b) \rrbracket + (\llbracket (c, d) \rrbracket + \llbracket (e, f) \rrbracket)
+\]
+Unravelling the definitions this is
+\[
+a + c + e + (b + (d + f)) = b + d + f + (a + (c + e))
+\]
+that is true by associativity and commutativity in $\N$.
+\end{proof}
+
+\begin{proposition}
+    \label{MyInt.commRing}
+    \lean{MyInt.commRing}
+    \leanok
+    $\MyInt$ with addition and multiplication is a commutative ring.
+\end{proposition}
+\begin{proof}
+    \uses{MyInt.add, MyInt.mul, MyInt.zero, MyInt.one}
+    \leanok
+    We have to prove various properties, namely:
+    \begin{itemize}
+        \item addition is associative (already done in \ref{MyInt.add_assoc})
+        \item $0$ works as neutral element for addition (on both sides)
+        \item existence of an inverse for addition (we prove that $x + (-x) = (-x) + x = 0$)
+        \item addition is commutative
+        \item left and right distributivity of multiplication with respect to addition
+        \item associativity of multiplication
+        \item $1$ works as neutral element for multiplication (on both sides)
+    \end{itemize}
+    All the proofs are essentially identical to the proof of Lemma~\ref{MyInt.add_assoc} above.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.zero_ne_one}
+    \lean{MyInt.zero_ne_one}
+    \leanok
+In $\MyInt$ we have $0 \neq 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyInt.zero, MyInt.one}
+    If $0 = 1$ by definition we would have $\llbracket (0,0) \rrbracket = \llbracket (1,0) \rrbracket$
+    so $0+1=0+0$ in $\N$, that is absurd.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.mul_ne_zero}
+    \lean{MyInt.mul_ne_zero}
+    \leanok
+Let $x$ and $y$ in $\MyInt$ such that $x \neq 0$ and $y \neq 0$. Then $x*y \neq 0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyInt.zero, MyInt.mul}
+    It is enough to prove that, for all $a$, $b$, $c$ and $d$ in $\N$ such that $a \neq b$ and $c \neq d$ we have $a*c+b*d\neq a*d+b*c$. If this is not the case we must have $a = b$ or $c = d$. (Can you see how to prove this in $\N$? You cannot use subtraction!) and we are done.
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $i \colon \N \to \MyInt$}{The inclusion}}
+\begin{definition}
+    \label{MyInt.i}
+    \lean{MyInt.i}
+    \uses{MyInt}
+    \leanok
+    We define a map
+\begin{gather*}
+    i \colon \N \to \MyInt \\
+    n \mapsto \llbracket (n,0) \rrbracket
+\end{gather*}
+\end{definition}
+
+\begin{lemma}
+    \label{MyInt.i_zero}
+    \lean{MyInt.i_zero}
+    \leanok
+We have that $i(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt, MyInt.i_zero}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.i_one}
+    \lean{MyInt.i_one}
+    \leanok
+We have that $i(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt, MyInt.i_one}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.i_add}
+    \lean{MyInt.i_add}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a+b) = i(a) + i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.add, MyInt.i}
+    \leanok
+    We have $i(a+b) = \llbracket (a+b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
+    $i(b) = \llbracket (b, 0) \rrbracket$, so we need to prove that
+\[
+\llbracket (a+b, 0) \rrbracket = \llbracket (a, 0) \rrbracket + \llbracket (b, 0) \rrbracket
+\]
+that is obvious from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.i_mul}
+    \lean{MyInt.i_mul}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a*b) = i(a) * i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.mul, MyInt.i}
+    \leanok
+    We have $i(a+b) = \llbracket (a+b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
+    $i(b) = \llbracket (b, 0) \rrbracket$, so we need to prove that
+\[
+\llbracket (a+b, 0) \rrbracket = \llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket
+\]
+By definition of multiplication we have
+\[
+\llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket = \llbracket (a*c+0*0, a*0+0*b) \rrbracket
+\]
+and the lemma follows.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.i_injective}
+    \lean{MyInt.i_injective}
+    \leanok
+    We have that $i$ is injective.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.i}
+    \leanok
+    Let $a$ and $b$ such that $i(a)=i(b)$. This means $\llbracket (a,0) \rrbracket = \llbracket (b,0) \rrbracket$ so $a + 0 = 0 + b$ and hence $a = b$.
+\end{proof}
+
+\subsection{The order}
+
+\begin{definition}
+    \label{MyInt.le}
+    \lean{MyInt.le}
+    \uses{MyInt.i, MyInt.add}
+    \leanok
+Let $x$ and $y$ in $\MyInt$. We write $x \leq y$ if there exist a natural number $n$ such that
+\[
+y = x + i(n)
+\]
+\end{definition}
+
+\begin{lemma}
+    \label{MyInt.le_refl}
+    \lean{MyInt.le_refl}
+    \leanok
+    The relation $\leq$ on $\MyInt$ is reflexive.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le}
+    We can just take $n = 0$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.le_trans}
+    \lean{MyInt.le_trans}
+    \leanok
+    The relation $\leq$ on $\MyInt$ is transitive.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le}
+    Let $x$, $y$ and $z$ such that $x \leq y$ and $y \leq z$. It follows that there exist $p$ and $q$
+    such that $y = x + i(p)$ and $z = y + i(q)$. One can now take $p+q$ to show that $x \leq z$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.le_antisymm}
+    \lean{MyInt.le_antisymm}
+    \leanok
+    The relation $\leq$ on $\MyInt$ is antisymmetric.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le, MyInt.i_zero, MyInt.i_injective}
+    Let $x$ and $y$ such that $x \leq y$ and $y \leq x$. It follows that there exist $p$ and $q$
+    such that $y = x + i(p)$ and $x = y + i(q)$. In particular
+    \[
+    x = x + i(p) + i(q)
+    \]
+    Since $\MyInt$ is a ring, we obtain $i(p)+i(q) = 0$. Moreover $i(p+q)=i(p)+i(q)$ and $i(0)=0$, so
+    $i(p+q)=i(0)$ and hence, since $i$ is injective, $p+q = 0$. Now, $p$ and $q$ are \emph{natural numbers}, so $p=q=0$ and so $x=y$.
+\end{proof}
+
+It follows that $\leq$ is an order relation.
+
+\begin{lemma}
+    \label{MyInt.le_total}
+    \lean{MyInt.le_total}
+    \leanok
+    The order $\leq$ on $\MyInt$ is a total order.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le, MyInt.i_zero, MyInt.i_injective}
+    \leanok
+    Let $x$ and $y$ by in $\MyInt$. We can write $x = \llbracket (a,b) \rrbracket$ and
+    $y = \llbracket (c,d) \rrbracket$ and we need to prove that
+    $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$ or $\llbracket (c,d) \rrbracket \leq \llbracket (a,b) \rrbracket$. Let's consider two cases (we use that the order on $\N$ is total):
+    \begin{itemize}
+        \item if $a + d \leq b + c$ let $e$ be such that $b + c = a + d + e$. We prove that
+        $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$ using $e$. We have
+        \[
+        \llbracket (a,b) \rrbracket+i(e) = \llbracket (a,b) \rrbracket + \llbracket (e,0) \rrbracket
+        = \llbracket (a+e,b+0) \rrbracket = \llbracket (a+e,b) \rrbracket
+        \]
+        We have that $\llbracket (a+e,b) \rrbracket = \llbracket (c,d) \rrbracket$ since
+        \[
+        a+e+d=b+d
+        \]
+        by our assumption on $e$ and so $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$.
+        \item the case $b + c \leq a + d$ is completely analogous.
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.linearOrder}
+    \lean{MyInt.linearOrder}
+    \leanok
+    We have that $\MyInt$ with $\leq$ is a \emph{linear order}
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le_refl, MyInt.le_antisymm, MyInt.le_trans, MyInt.le_total}
+    \leanok
+    Clear from the lemmas above.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.zero_le_one}
+    \lean{MyInt.zero_le_one}
+    \leanok
+    In $\MyInt$ we have that $0 \leq 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.zero, MyInt.one, MyInt.le, MyInt.add}
+    \leanok
+    We use $1$ (as natural number). We need to prove that $0 + i(1) = 1$. Unravelling the definitions
+    this is obvious.
+\end{proof}
+
+\subsection{Interaction between the order and the ring structure}
+
+\begin{lemma}
+    \label{MyInt.add_le_add_left}
+    \lean{MyInt.add_le_add_left}
+    \leanok
+    Let $x$, $y$ and $z$ in $\MyInt$ be such that $x \leq y$. Then $z + x ≤ z + y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.le, MyInt.add}
+    \leanok
+    Let $n$ be such that $y = x + i(n)$. It's immediate that $n$ also work to show that $z + x ≤ z + y$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyInt.mul_pos}
+    \lean{MyInt.mul_pos}
+    \leanok
+    Let $x$ and $y$ in $\MyInt$ be such that $0 < x$ and $0 < y$. Then $0 < x * y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyInt.mul_ne_zero, MyInt.le, MyInt.mul}
+    By Lemma~\ref{MyInt.mul_ne_zero} we already know that $x*y \neq 0$, so it is enough to prove that
+    $0 \leq x*y$. Since $0 < x$, we have in particular that $0 \leq x$, and let $n$ be such that $x = 0 + i(n)$. Similarly, let $m$ be such that $y = 0 + i(m)$. We have $0 + i(n) = i(n)$ and $0 + i(m) = i(m)$, so we need to prove that $0 \leq i(n)*i(m)$. We do so using $n*m$: we have
+    \[
+    0+i(n*m)=i(n*m)=i(n)*i(m)
+    \]
+    as required.
 \end{proof}
