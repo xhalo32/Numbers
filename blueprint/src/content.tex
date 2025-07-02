@@ -1,7 +1,7 @@
 \chapter{The integers}
 
-We construct the integers starting from the natural numbers $\Z$. Since \texttt{lean} already has a
-type called $\Z$, we define a new type called $\MyInt$ that will be another definition of the integers.
+We construct the integers starting from the natural numbers $MyInt$. Since \texttt{lean} already has a
+type called $MyInt$, we define a new type called $\MyInt$ that will be another definition of the integers.
 
 \section{The \emph{preintegers}}
 
@@ -601,7 +601,7 @@ $\MyRat$ will be a quotient of a type called $\MyPrerat$.
     \lean{MyPrerat}
     \leanok
     \uses{MyInt}
-    Let $\MyPrerat$ be $\Z \times \Z \backslash \{0\}$
+    Let $\MyPrerat$ be $MyInt \times MyInt \backslash \{0\}$
 \end{definition}
 
 \begin{definition}
