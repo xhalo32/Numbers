@@ -43,7 +43,7 @@ def IsNonneg (ab : MyPrerat) : Prop := ab.1 ≥ 0 ∧ ab.2.1 > 0
 -- This doesn't mean "a/b >= 0", but it implies it, and this is
 -- all we care about
 
-lemma IsNonneg_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) :
+lemma IsNonneg_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
     IsNonneg (a, b) ↔ a ≥ 0 ∧ b.1 > 0 := by
   sorry
 
@@ -92,7 +92,7 @@ namespace MyRat
 -/
 -- this definition is somehow bad as it asks for proofs of b≠0 and b>0
 def IsNonneg (x : MyRat) : Prop :=
-  ∃ (a b : ℤ) (_ : 0 ≤ a) (hb : 0 < b), x = ⟦(a, ⟨b, hb.ne'⟩)⟧
+  ∃ (a b : MyInt) (_ : 0 ≤ a) (hb : 0 < b), x = ⟦(a, ⟨b, hb.ne'⟩)⟧
 
 /-
 
@@ -243,7 +243,7 @@ the naturals and integers to the rationals.
 
 /-- The natural map from the integers to the rationals
 preserves and reflects `≤`. -/
-lemma j_le (p q : ℤ) : j p ≤ j q ↔ p ≤ q := by
+lemma j_le (p q : MyInt) : j p ≤ j q ↔ p ≤ q := by
   sorry
 
 /-- The natural map from the naturals to the rationals preserves

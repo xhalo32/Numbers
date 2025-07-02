@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import Numbers.integers
 
 /-!
 
@@ -6,13 +7,12 @@ All the original work is by Kevin Buzzard.
 
 # The rationals
 
-In this file we assume all standard facts about the integers, and then build
-the rationals from scratch.
+In this file we build the rationals from scratch.
 
 The strategy is to observe that every rationals can be written as `a / b`
 for `a` and `b` integers witb `b ≠ 0`, so we define the "pre-rationals" to
-be `ℤ × (ℤ - {0})`, the pairs `(a, b)` of integers. We define an equivalence
-relation `≈` on `ℤ × (ℤ - {0})`, with the idea being that `(a, b) ≈ (c, d)`
+be `MyInt × (MyInt - {0})`, the pairs `(a, b)` of integers. We define an equivalence
+relation `≈` on `MyInt × (MyInt - {0})`, with the idea being that `(a, b) ≈ (c, d)`
 if and only if `a / b = c / d`. This doesn't make sense yet, but the equivalent
 equation `a * d = b * c` does. We prove that this is an equivalence relation,
 and define the integers to be the quotient.
@@ -38,11 +38,11 @@ defined in this file.
 ### Denominator API
 
 -/
-instance : Mul {x : ℤ // x ≠ 0} where
+instance : Mul {x : MyInt // x ≠ 0} where
   mul a b := ⟨a.1 * b.1, mul_ne_zero a.2 b.2⟩
 
-@[simp, norm_cast] lemma Int.ne_zero_coe_mul (a b : {x : ℤ // x ≠ 0}) :
-    ((a * b : {x : ℤ // x ≠ 0}) : ℤ) = a * b := by
+@[simp, norm_cast] lemma Int.ne_zero_coe_mul (a b : {x : MyInt // x ≠ 0}) :
+    ((a * b : {x : MyInt // x ≠ 0}) : MyInt) = a * b := by
   sorry
 
 /-!
@@ -52,7 +52,7 @@ instance : Mul {x : ℤ // x ≠ 0} where
 -/
 
 /-- A "pre-rational" is just a pair of integers, the second one non-zero. -/
-abbrev MyPrerat := ℤ × {x : ℤ // x ≠ 0}
+abbrev MyPrerat := MyInt × {x : MyInt // x ≠ 0}
 
 namespace MyPrerat
 
@@ -67,7 +67,7 @@ by to get rationals. -/
 def R (x y : MyPrerat) : Prop := x.1 * y.2 = x.2 * y.1
 
 -- Lemma saying what definition of `R` is on ordered pairs
-lemma R_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+lemma R_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     R (a,b) (c,d) ↔ a * d = b * c := by
   sorry
 
@@ -86,12 +86,12 @@ instance R_equiv : Setoid MyPrerat where
   iseqv := ⟨R_refl, R_symm, R_trans⟩
 
 -- Teach the definition of `≈` to the simplifier
-@[simp] lemma equiv_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+@[simp] lemma equiv_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     (a, b) ≈ (c, d) ↔ a * d = b * c := by
   sorry
 
 -- Teach the definition of `Setoid.r` to the simplifier
-@[simp] lemma equiv_def' (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+@[simp] lemma equiv_def' (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     Setoid.r (a, b) (c, d) ↔ a * d = b * c := by
   sorry
 
@@ -111,7 +111,7 @@ instance R_equiv : Setoid MyPrerat where
 def neg (ab : MyPrerat) : MyPrerat := (-ab.1, ab.2)
 
 -- teach it to the simplifier
-@[simp] lemma neg_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) : neg (a, b) = (-a, b) := by
+@[simp] lemma neg_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) : neg (a, b) = (-a, b) := by
   sorry
 
 lemma neg_quotient ⦃x x' : MyPrerat⦄ (h : x ≈ x') : neg x ≈ neg x' := by
@@ -127,7 +127,7 @@ lemma neg_quotient ⦃x x' : MyPrerat⦄ (h : x ≈ x') : neg x ≈ neg x' := by
 def add (ab cd : MyPrerat) : MyPrerat := (ab.1 * cd.2 + ab.2 * cd.1, ab.2 * cd.2)
 
 -- teach it to the simplifier
-@[simp] lemma add_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+@[simp] lemma add_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     add (a, b) (c, d) = (a * d + b * c, b * d) := by
   sorry
 
@@ -145,7 +145,7 @@ lemma add_quotient ⦃x x' : MyPrerat⦄ (h : x ≈ x') ⦃y y' : MyPrerat⦄ (h
 def mul (ab cd : MyPrerat) : MyPrerat := (ab.1 * cd.1, ab.2 * cd.2)
 
 -- teach it to the simplifier
-@[simp] lemma mul_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+@[simp] lemma mul_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     mul (a, b) (c, d) = (a * c, b * d) := by
   sorry
 
@@ -160,14 +160,15 @@ lemma mul_quotient ⦃x x' : MyPrerat⦄ (h : x ≈ x') ⦃y y' : MyPrerat⦄ (h
 -/
 
 /-- Reciprocal, or inverse, on pre-rationals. -/
+noncomputable
 def inv (x : MyPrerat) : MyPrerat := if ha : x.1 ≠ 0 then ⟨x.2, x.1, ha⟩ else ⟨0, 1, by simp⟩
 
 -- teach it to the simplifier
-@[simp] lemma inv_def {a : ℤ} (b : {x : ℤ // x ≠ 0}) (ha : a ≠ 0) :
+@[simp] lemma inv_def {a : MyInt} (b : {x : MyInt // x ≠ 0}) (ha : a ≠ 0) :
     inv (a, b) = (b.1, ⟨a, ha⟩) := by
   sorry
 
-lemma inv_def' (a : ℤ) (b : {x : ℤ // x ≠ 0}) :
+lemma inv_def' (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
     inv (a, b) = if ha : a ≠ 0 then ⟨b, a, ha⟩ else ⟨0, 1, by simp⟩ := by
   sorry
 
@@ -189,7 +190,7 @@ abbrev MyRat := Quotient R_equiv
 
 namespace MyRat
 
-@[simp] lemma Quot_eq_Quotient (a : ℤ) (b : {x : ℤ // x ≠ 0}) :
+@[simp] lemma Quot_eq_Quotient (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
     Quot.mk Setoid.r (a, b) = ⟦(a, b)⟧ := by
   sorry
 
@@ -225,7 +226,7 @@ def mul : MyRat → MyRat → MyRat  := Quotient.map₂ MyPrerat.mul mul_quotien
 -- `*` notation
 instance : Mul MyRat where mul := mul
 
-lemma mul_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x ≠ 0}) :
+lemma mul_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
     (⟦(a, b)⟧ : MyRat) * ⟦(c, d)⟧ = ⟦(a * c, b * d)⟧ :=
   sorry
 
@@ -235,11 +236,13 @@ lemma mul_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) (c : ℤ) (d : {x : ℤ // x 
 
 -/
 /-- reciprocal on nonzero rationals. -/
+noncomputable
 def inv : MyRat → MyRat := Quotient.map MyPrerat.inv inv_quotient
 
+noncomputable
 instance : Inv MyRat := ⟨inv⟩
 
-lemma inv_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) :
+lemma inv_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
     (⟦(a, b)⟧ : MyRat)⁻¹ = ⟦MyPrerat.inv (a, b)⟧ := by
   sorry
 
@@ -341,10 +344,11 @@ lemma zero_ne_one : (0 : MyRat) ≠ 1 := by
 lemma mul_inv_cancel (a : MyRat) (ha : a ≠ 0) : a * a⁻¹ = 1 := by
   sorry
 
+noncomputable
 instance field : Field MyRat where
   exists_pair_ne := ⟨0, 1, zero_ne_one⟩
   mul_inv_cancel := mul_inv_cancel
-  inv_zero := rfl
+  inv_zero := by sorry
   qsmul := _ --ignore
   nnqsmul := _ --ignore
 
@@ -384,7 +388,7 @@ lemma i_injective (a b : ℕ) : i a = i b ↔ a = b := by
 -/
 
 /-- The natural map from the integers to the rationals. -/
-def j (n : ℤ) : MyRat := ⟦(n, ⟨1, by simp⟩)⟧
+def j (n : MyInt) : MyRat := ⟦(n, ⟨1, by simp⟩)⟧
 
 -- The natural map preserves 0
 lemma j_zero : j 0 = 0 := by
@@ -395,28 +399,28 @@ lemma j_one : j 1 = 1 := by
   sorry
 
 -- The natural map preserves addition
-lemma j_add (a b : ℤ) : j (a + b) = j a + j b := by
+lemma j_add (a b : MyInt) : j (a + b) = j a + j b := by
   sorry
 
 -- The natural map preserves multiplication
-lemma j_mul (a b : ℤ) : j (a * b) = j a * j b := by
+lemma j_mul (a b : MyInt) : j (a * b) = j a * j b := by
   sorry
 
 -- The natural map is injective
-lemma j_injective (a b : ℤ) : j a = j b ↔ a = b := by
+lemma j_injective (a b : MyInt) : j a = j b ↔ a = b := by
   sorry
 
 -- All the proofs were exactly the same as the natural number case.
 
 -- Finally we check that the `i` and `j` commute with the natural
--- map `↑` from `ℕ` to `ℤ`:
+-- map `↑` from `ℕ` to `MyInt`:
 
-lemma j_coe_eq_i : ∀ (n : ℕ), j (↑n : ℤ) = i n := by
+lemma j_coe_eq_i : ∀ (n : ℕ), j (↑n : MyInt) = i n := by
   sorry
 
 -- We can now give a formula for `⟦(a, b)⟧` using `j a` and `j b`.
 
-theorem Quotient.mk_def (a : ℤ) (b : {x : ℤ // x ≠ 0}) :
+theorem Quotient.mk_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
     ⟦(a, b)⟧ = j a * (j b)⁻¹ := by
   sorry
 
