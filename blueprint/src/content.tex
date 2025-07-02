@@ -569,3 +569,176 @@ It follows that $\leq$ is an order relation.
     \]
     as required.
 \end{proof}
+
+\chapter{The rationals}
+
+We can now define the rationals, starting with the integers. Rather than using our copy of the integers it is convenient to use the ``standard'' version $\Z$ already defined in \Lean{} (so all the relevant results are there).
+
+We follow a similar path to the one for $\MyInt$.
+
+\section{The \emph{prerationals}}
+
+$\MyRat$ will be a quotient of a type called $\MyPrerat$.
+
+\begin{definition}
+    \label{MyPrerat}
+    \lean{MyPrerat}
+    \leanok
+    Let $\MyPrerat$ be $\Z \times \Z \backslash \{0\}$
+\end{definition}
+
+\begin{definition}
+    \label{MyPrerat.R}
+    \lean{MyPrerat.R}
+    \leanok
+    \uses{MyPrerat}
+We define a relation $R$ on $\MyPrerat$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
+\[
+a * d = b * c
+\]
+\end{definition}
+
+\begin{lemma}
+$R$ is a reflexive relation.
+    \label{MyPrerat.R_refl}
+    \lean{MyPrerat.R_refl}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+$R$ is a symmetric relation.
+    \label{MyPrerat.R_symm}
+    \lean{MyPrerat.R_symm}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+$R$ is a transitive relation.
+    \label{MyPrerat.R_trans}
+    \lean{MyPrerat.R_trans}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrerat.R_equiv}
+    \lean{MyPrerat.R_equiv}
+We have that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
+$x R y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R_refl, MyPrerat.R_symm, MyPrerat.R_trans}
+Clear from \ref{MyPrerat.R_refl}, \ref{MyPrerat.R_symm} and \ref{MyPrerat.R_trans}.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.neg}
+    \lean{MyPrerat.neg}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{negation} on $\MyPrerat$ as follows: the negation of $x = (a,b)$ is
+$(-a,b)$:
+\[
+-x = -(a,b) = (-a,b)
+\]
+Note that it automatically well defined (meaning that second component of $(-a,b)$ is different from $0$).
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.neg_quotient}
+    \lean{MyPrerat.neg_quotient}
+    \leanok
+If $x \approx x'$, then $-x \approx -x'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.neg}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.add}
+    \lean{MyPrerat.add}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{addition} on $\MyPrerat$ as follows: the addition of $x = (a,b)$
+and $y = (b, c)$ is
+\[
+x + y = (a,b) + (c,d) = (a * d + b * c, b*d)
+\]
+Do you see why it is well defined?
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.add_quotient}
+    \lean{MyPrerat.add_quotient}
+    \leanok
+If $x \approx x'$ and $y \approx y'$, then $x + y \approx x' + y'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.add}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.mul}
+    \lean{MyPrerat.mul}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{multiplication} on $\MyPrerat$ as follows: the multiplication of $x = (a,b)$ and $y = (b, c)$ is
+\[
+x * y = (a,b) * (c,d) = (a*c, b*d)
+\]
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.mul_quotient}
+    \lean{MyPrerat.mul_quotient}
+    \leanok
+If $x \approx x'$ and $y \approx y'$, then $x * y \approx x' * y'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.mul}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.inv}
+    \lean{MyPrerat.inv}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{negation} on $\MyPrerat$ as follows: the inverse of $x = (a,b)$ is:
+\[
+\mbox{if} b \neq 0 \mbox{ then } x^{-1} = (b, a), \mbox{ otherwise } x^{-1} = (0, 1)
+\]
+Note that $x^{-1}$ is \emph{always} defined!
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.inv_quotient}
+    \lean{MyPrerat.inv_quotient}
+    \leanok
+If $x \approx x'$, then $x^{-1} \approx x'^{-1}$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.inv}
+\leanok
+Exercice.
+\end{proof}
