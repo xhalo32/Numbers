@@ -131,3 +131,57 @@ a+c+b'+d'=b+d+a'+c'
 \]
 that is $x + y = (a+c,b+d) \approx (a'+c',b'+d') = x'+y'$.
 \end{proof}
+
+\begin{definition}
+    \label{MyPreint.mul}
+    \lean{MyPreint.mul}
+    \leanok
+    \uses{MyPreint.R}
+We define an operation, called \emph{multiplication} on $\MyPreint$ as follows: the multiplication of $x = (a,b)$ and $y = (b, c)$ is
+\[
+x * y = (a,b) * (c,d) = (a*c+b*d, a*d+b*c)
+\]
+\end{definition}
+
+\begin{lemma}
+    \label{MyPreint.mul_quotient}
+    \lean{MyPreint.mul_quotient}
+    \leanok
+If $x \approx x'$ and $y \approx y'$, then $x * y \approx x' * y'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPreint.mul}
+Let $x = (a,b)$, $y = (c,d)$, $x' = (a',b')$ and $y' = (c',d')$ such that $x \approx x'$ and $y \approx y'$. by assumption we have
+\[
+a + b' = b + a' \mbox{ and } c + d' = d + c'
+\]
+Multiplying the first equality by $c'$ and by $d'$ we get
+\begin{equation} \label{H1}
+a * c' + b' * c' = b * c' + a' * c'
+\end{equation}
+and
+\begin{equation} \label{H2}
+b * d' + a' * d' = a * d' + b' * d'
+\end{equation}
+Multiplying the second equality by $a$ and by $b$ we get
+\begin{equation} \label{H3}
+a * c + a * d' = a * d + a * c'
+\end{equation}
+and
+\begin{equation} \label{H4}
+b * d + b * c' = b * c + b * d'
+\end{equation}
+Adding \eqref{H1} and \eqref{H4} we get
+\[
+a * c' + b' * c' + b * d + b * c' = b * c' + a' * c' + b * c + b * d'
+\]
+Adding \eqref{H3} and \eqref{H2} we get
+\[
+ a * c + a * d' + b * d' + a' * d' = a * d + a * c' + a * d' + b' * d'
+\]
+Adding the last two equations and cancelling the terms appearing on both sides we finally have
+\[
+b' * c' + b * d + a * c + a' * d' =  a' * c' + b * c + a * d + b' * d'
+\]
+that is $x * y = \approx  x'*y'$.
+\end{proof}

@@ -105,8 +105,8 @@ lemma add_quotient ⦃x x' : MyPreint⦄ (h : x ≈ x') ⦃y y' : MyPreint⦄ (h
   sorry
 
 /-- Multiplication on pre-integers. -/
-@[simp] def mul (ab cd : MyPreint) : MyPreint :=
-  (ab.1 * cd.1 + ab.2 * cd.2, ab.1 * cd.2 + ab.2 * cd.1)
+@[simp] def mul (x y : MyPreint) : MyPreint :=
+  (x.1 * y.1 + x.2 * y.2, x.1 * y.2 + x.2 * y.1)
 
 -- teach it to the simplifier
 @[simp] lemma mul_def (a b c d : ℕ) : mul (a, b) (c, d) = (a * c + b * d, a * d + b * c) := by
