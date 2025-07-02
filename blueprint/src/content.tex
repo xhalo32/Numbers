@@ -74,6 +74,7 @@ $x R y$.
     \label{MyPreint.neg}
     \lean{MyPreint.neg}
     \leanok
+    \uses{MyPreint.R}
 We define an operation, called \emph{negation} on $\MyPreint$ as follows: the negation of $x = (a,b)$ is
 $(b,a)$:
 \[
@@ -82,16 +83,28 @@ $(b,a)$:
 \end{definition}
 
 \begin{lemma}
-    \label{neg_quotient}
-    \lean{neg_quotient}
+    \label{MyPreint.neg_quotient}
+    \lean{MyPreint.neg_quotient}
     \leanok
-If $x \approx y$ then $-x \approx -y$.
+If $x \approx x'$ then $-x \approx -x'$.
 \end{lemma}
 \begin{proof}
     \uses{MyPreint.neg}
-Let $x = (a,b)$ and $y = (c,d)$, so by assumption $a + d = b + c$. Be definition we have
+Let $x = (a,b)$ and $x' = (a',b')$, so by assumption $a + b' = b + a'$. Be definition we have
 \[
--x=-(a,b)=(b,a) \mbox{ and } -y=-(c,d)=(d,c)
+-x=-(a,b)=(b,a) \mbox{ and } -x'=-(a',b')=(b',a')
 \]
-We need to show $b+c=d+a$, which follows immediately from $a + d = b + c$.
+We need to show $b+a'=b'+a$, which follows immediately from $a + b' = b + a'$.
 \end{proof}
+
+\begin{definition}
+    \label{MyPreint.add}
+    \lean{MyPreint.add}
+    \leanok
+    \uses{MyPreint.R}
+We define an operation, called \emph{addition} on $\MyPreint$ as follows: the addition of $x = (a,b)$
+and $y = (b, c)$ is
+\[
+x + y = (a,b) + (c,d) = (a+c, b + d)
+\]
+\end{definition}
