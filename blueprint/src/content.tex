@@ -15,8 +15,53 @@ $\MyInt$ will be a quotient of a type called $\MyPreint$.
     \label{def:R}
     \lean{MyPreint.R}
     \leanok
-We define a relation on $\MyPreint$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
+We define a relation $R$ on $\MyPreint$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
 \[
 a + d = b + c
 \]
 \end{definition}
+
+\begin{lemma}
+$R$ is a reflexive relation.
+    \label{lemma:reflexive}
+    \lean{MyPreint.R_refl}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{def:R}
+    This follows by commutativity of addition in $\N$.
+\end{proof}
+
+\begin{lemma}
+$R$ is a symmetric relation.
+    \label{lemma:symmetric}
+    \lean{MyPreint.R_symm}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{def:R}
+    This follows by commutativity of addition in $\N$.
+\end{proof}
+
+\begin{lemma}
+$R$ is a transitive relation.
+    \label{lemma:transitive}
+    \lean{MyPreint.R_trans}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{def:R}
+    Let $x$, $y$ and $z$ in $\MyPreint$ such that $x R y$ and $y R z$. We can write $x = (a,b)$ and similarly
+    for $y = (c,d)$ and $z = (e,f)$. By assumption we have $a+d=b+c$ and $c+f=d+e$. Adding these equalities we get
+    \[
+    a+d+c+f=b+c+d+e
+    \]
+    Since addition on $\N$ is cancellative we get
+    \[
+    a+f = b + e
+    \]
+    as wanted.
+\end{proof}
