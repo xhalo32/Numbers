@@ -349,7 +349,7 @@ lemma add_le_add_left (x y : MyInt) (h : x ≤ y) (z : MyInt) : z + x ≤ z + y 
 lemma aux_mul_lemma (a b c d : ℕ) (h : a * d + b * c = a * c + b * d) : a = b ∨ c = d := by
   sorry
 
-lemma mul_pos (x y : MyInt) (ha : 0 < x) (hb : 0 < y) : 0 < x * y := by
+lemma mul_pos (x y : MyInt) (hx : 0 < x) (hy : 0 < y) : 0 < x * y := by
   sorry
 
 instance : Nontrivial MyInt := ⟨0, 1, zero_ne_one⟩
