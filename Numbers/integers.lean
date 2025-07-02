@@ -2,6 +2,8 @@ import Mathlib.Tactic
 
 /-!
 
+All the original work is by Kevin Buzzard.
+
 # The integers
 
 In this file we assume all standard facts about the naturals, and then build
