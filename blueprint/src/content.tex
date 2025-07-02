@@ -1,7 +1,22 @@
-% In this file you should put the actual content of the blueprint.
-% It will be used both by the web and the print version.
-% It should *not* include the \begin{document}
-%
-% If you want to split the blueprint content into several files then
-% the current file can be a simple sequence of \input. Otherwise It
-% can start with a \section or \chapter for instance.
+\chapter{The integers}
+
+We construct the integers starting from the natural numbers $\Z$. Since \texttt{lean} already has a
+type called $\Z$, we define a new type called $\MyInt$ that will be another definition of the integers.
+$\MyInt$ will be a quotient of a type called $\MyPreint$.
+
+\begin{definition}
+    \label{def:MyPreint}
+    \lean{MyPreint}
+    \leanok
+    Let $\MyPreint$ be $\N \times \N$
+\end{definition}
+
+\begin{definition}
+    \label{def:R}
+    \lean{MyPreint.R}
+    \leanok
+We define a relation on $\MyPreint$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
+\[
+a + d = b + c
+\]
+\end{definition}
