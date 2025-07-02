@@ -35,23 +35,6 @@ jobs:
 
       - name: Build project
         run: ~/.elan/bin/lake build Numbers
-
-      - name: Cache API docs
-        uses: actions/cache@v4
-        with:
-          path: |
-            .lake/build/doc/Aesop
-            .lake/build/doc/Batteries
-            .lake/build/doc/find
-            .lake/build/doc/Init
-            .lake/build/doc/Lake
-            .lake/build/doc/Lean
-            .lake/build/doc/Mathlib
-            .lake/build/doc/Std
-          key: Docs-${{ hashFiles('lake-manifest.json') }}
-
-      - name: Build project API documentation
-        run: ~/.elan/bin/lake -R -Kenv=dev build Numbers:docs
       
       - name: Check for `home_page` folder # this is meant to detect a Jekyll-based website
         id: check_home_page
@@ -89,14 +72,6 @@ jobs:
         run: |
             ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
 
-      - name: Copy API documentation to `home_page/docs`
-        run: cp -r .lake/build/doc home_page/docs
-
-      - name: Remove unnecessary lake files from documentation in `home_page/docs`
-        run: |
-          find home_page/docs -name "*.trace" -delete
-          find home_page/docs -name "*.hash" -delete
-
       - name: Bundle dependencies
         uses: ruby/setup-ruby@v1
         with:
@@ -119,7 +94,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Make sure the API documentation cache works
-        run: mv home_page/docs .lake/build/doc
      
