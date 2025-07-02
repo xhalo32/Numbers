@@ -135,14 +135,14 @@ namespace MyInt
   sorry
 
 -- `0` notation (the equiv class of (0,0))
-instance : Zero MyInt where zero := ⟦(0, 0)⟧
+instance zero : Zero MyInt where zero := ⟦(0, 0)⟧
 
 -- lemma stating definition of zero
 lemma zero_def : (0 : MyInt) = ⟦(0, 0)⟧ := by
   sorry
 
 -- `1` notation (the equiv class of (1,0))
-instance : One MyInt where one := ⟦(1, 0)⟧
+instance one : One MyInt where one := ⟦(1, 0)⟧
 
 -- lemma stating definition of one
 lemma one_def : (1 : MyInt) = ⟦(1, 0)⟧ := by
