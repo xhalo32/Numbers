@@ -253,6 +253,25 @@ instance commRing : CommRing MyInt where
 lemma zero_ne_one : (0 : MyInt) ≠ 1 := by
   sorry
 
+lemma aux_mul_lemma (a b c d : ℕ) (h : a * d + b * c = a * c + b * d) : a = b ∨ c = d := by
+  induction a generalizing b with
+  | zero =>
+    simp_all
+    tauto
+  | succ e he =>
+    cases b with
+    | zero =>
+      simp_all
+    | succ f =>
+      specialize he f
+      simp
+      apply he
+      simp [Nat.succ_mul] at h
+      linarith
+
+lemma mul_ne_zero (x y : MyInt) : x ≠ 0 → y ≠ 0 → x * y ≠ 0 := by
+  sorry
+
 /-!
 
 ## The map from the naturals to the integers
