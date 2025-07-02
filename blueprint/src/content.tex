@@ -452,6 +452,7 @@ y = x + i(n)
 \end{lemma}
 \begin{proof}
     \uses{MyInt.le}
+    \leanok
     We can just take $n = 0$.
 \end{proof}
 
@@ -463,6 +464,7 @@ y = x + i(n)
 \end{lemma}
 \begin{proof}
     \uses{MyInt.le}
+    \leanok
     Let $x$, $y$ and $z$ such that $x \leq y$ and $y \leq z$. It follows that there exist $p$ and $q$
     such that $y = x + i(p)$ and $z = y + i(q)$. One can now take $p+q$ to show that $x \leq z$.
 \end{proof}
@@ -475,6 +477,7 @@ y = x + i(n)
 \end{lemma}
 \begin{proof}
     \uses{MyInt.le, MyInt.i_zero, MyInt.i_injective}
+    \leanok
     Let $x$ and $y$ such that $x \leq y$ and $y \leq x$. It follows that there exist $p$ and $q$
     such that $y = x + i(p)$ and $x = y + i(q)$. In particular
     \[
