@@ -760,3 +760,108 @@ If $x \approx x'$, then $x^{-1} \approx x'^{-1}$.
 \leanok
 Exercice.
 \end{proof}
+
+\section{The rationals}
+
+\subsection{Definitions}
+
+\begin{definition}
+    \label{MyRat}
+    \lean{MyRat}
+    \leanok
+    \uses{MyPrerat.R_equiv}
+    We define our rationals $\MyRat$ as
+\[
+\MyRat = \MyPrerat \, / \approx
+\]
+We will write $\llbracket (a, b) \rrbracket$ for the class of $(a,b)$.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.zero}
+    \lean{MyRat.zero}
+    \uses{MyPrerat.R_equiv}
+    \leanok
+We define the zero of $\MyRat$, denoted $0$ as the class of $(0,1)$ (note that $1 \neq 0$ in $\MyInt$).
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.one}
+    \lean{MyRat.one}
+    \uses{MyPrerat.R_equiv}
+    \leanok
+We define the one of $\MyRat$, denoted $1$ as the class of $(1,1)$ (note that $1 \neq 0$ in $\MyInt$).
+\end{definition}
+
+\subsection{Commutative ring structure}
+
+\begin{definition}
+    \label{MyRat.neg}
+    \lean{MyRat.neg}
+    \uses{MyPrerat.R_equiv, MyPrerat.neg_quotient}
+    \leanok
+We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+\[
+-x = \llbracket -(a, b) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.neg_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.add}
+    \lean{MyRat.add}
+    \uses{MyPrerat.R_equiv, MyPrerat.add_quotient}
+    \leanok
+We define the addition of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x + y = \llbracket (a,b)+(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.add_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.mul}
+    \lean{MyRat.mul}
+    \uses{MyPrerat.R_equiv, MyPrerat.mul_quotient}
+    \leanok
+We define the multiplication of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x * y = \llbracket (a, b)*(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.mul_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.inv}
+    \lean{MyRat.inv}
+    \uses{MyPrerat.R_equiv, MyPrerat.inv_quotient}
+    \leanok
+We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+\[
+x^{-1} = \llbracket (a, b)^{-1} \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.inv_quotient} this is well defined.
+\end{definition}
+
+\begin{proposition}
+    \label{MyRat.commRing}
+    \lean{MMyRat.commRing}
+    \leanok
+    $\MyRat$ with addition and multiplication is a commutative ring.
+\end{proposition}
+\begin{proof}
+    \uses{MyRat.add, MyRat.mul, MyRat.zero, MyRat.one}
+    \leanok
+    We have to prove various properties, namely:
+    \begin{itemize}
+        \item addition is associative
+        \item $0$ works as neutral element for addition (on both sides)
+        \item existence of an inverse for addition (we prove that $x + (-x) = (-x) + x = 0$)
+        \item addition is commutative
+        \item left and right distributivity of multiplication with respect to addition
+        \item associativity of multiplication
+        \item $1$ works as neutral element for multiplication (on both sides)
+    \end{itemize}
+    All the proofs are essentially identical, going to $\MyInt$, unravelling the definition and then
+    checking the equality holds in $\MyInt$.
+\end{proof}
