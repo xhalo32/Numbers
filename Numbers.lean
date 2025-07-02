@@ -1,1 +1,1 @@
-import Numbers.Example
+import Numbers.integers
