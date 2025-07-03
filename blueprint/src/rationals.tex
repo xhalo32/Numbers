@@ -672,3 +672,98 @@ Let $x$ and $y$ in $\MyRat$. We write $x \leq y$ if $y - x$ is nonnegative.
 \end{proof}
 
 It follows that $\leq$ is an order relation.
+
+
+\subsection{Interaction between the order and the ring structure}
+
+\begin{lemma}
+    \label{MyRat.add_le_add_left}
+    \lean{MyRat.add_le_add_left}
+    \leanok
+    Let $x$, $y$ and $z$ in $\MyRat$ be such that $x \leq y$. Then $z + x ≤ z + y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.le, MyRat.add}
+    \leanok
+    Clear from the definitions.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.mul_nonneg}
+    \lean{MyInt.mul_nonneg}
+    \leanok
+    Let $x$ and $y$ in $\MyRat$ be such that $0 \leq x$ and $0 \leq y$. Then $0 \leq x * y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.isNonneg_mul_isNonneg}
+    It follows from Lemma~\ref{MyRat.isNonneg_mul_isNonneg}.
+\end{proof}
+
+We have proved that $\MyRat$ is an ordered ring.
+
+\subsection{Interaction between the order and the inclusions}
+
+\begin{lemma}
+    \label{MyRat.j_le_iff}
+    \lean{MyInt.j_le_iff}
+    \leanok
+    Let $x$ and $y$ in $\MyInt$. We have that $j(x) \leq j(y)$ if and only if $x \leq y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.IsNonneg, MyInt.le}
+    \leanok
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_le_iff}
+    \lean{MyInt.i_le_iff}
+    \leanok
+    Let $x$ and $y$ in $\N$. We have that $i(x) \leq i(y)$ if and only if $x \leq y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.IsNonneg, MyInt.i_le_iff, MyRat.j_le_iff, MyRat.j_comp_eq_i}
+    \leanok
+    It follows immediately by Lemma~\ref{MyInt.i_le_iff}, Lemma~\ref{MyRat.j_le_iff} and Lemma~\ref{MyRat.j_comp_eq_i}.
+\end{proof}
+
+\subsection{The linear order structure}
+
+\begin{lemma}
+    \label{MyRat.le_total}
+    \lean{MyRat.le_total}
+    \leanok
+    The order $\leq$ on $\MyRat$ is a total order.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.nonneg_neg_of_not_nonneg}
+    \leanok
+This follows by Lemma~\ref{MyRat.nonneg_neg_of_not_nonneg}.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.linearOrder}
+    \lean{MyRat.linearOrder}
+    \leanok
+    We have that $\MyRat$ with $\leq$ is a \emph{linear order}
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.le_refl, MyRat.le_antisymm, MyRat.le_trans, MyRat.le_total}
+    \leanok
+    Clear from the lemma above.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.mul_pos}
+    \lean{MyRat.mul_pos}
+    \leanok
+    Let $x$ and $y$ in $\MyRat$ be such that $0 < x$ and $0 < y$. Then $0 < x * y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.zero_le_iff_IsNonneg, MyRat.isNonneg_mul_isNonneg}
+Exercice.
+\end{proof}
+
+We now have that $\MyRat$ is a \emph{strict ordered ring}: a nontrivial ring with a partial order such that addition is strictly monotone and multiplication by a positive number is strictly monotone.

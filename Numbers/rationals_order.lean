@@ -138,12 +138,6 @@ Next is antisymmetry
 lemma le_antisymm (x y : MyRat) (hxy : x ≤ y) (hyx : y ≤ x) : x = y := by
   sorry
 
-lemma add_le_add_left (x y : MyRat) (h : x ≤ y) (t : MyRat) : t + x ≤ t + y := by
-  simp_all [le_def]
-
-lemma mul_nonneg (x y : MyRat) (hx : 0 ≤ x) (hy : 0 ≤ y) : 0 ≤ x * y := by
-  sorry
-
 instance : PartialOrder MyRat where
   le := (. ≤ .)
   le_refl := le_refl
@@ -151,6 +145,12 @@ instance : PartialOrder MyRat where
   le_antisymm := le_antisymm
 
 instance : ZeroLEOneClass MyRat := ⟨zero_le_one⟩
+
+lemma add_le_add_left (x y : MyRat) (h : x ≤ y) (t : MyRat) : t + x ≤ t + y := by
+  simp_all [le_def]
+
+lemma mul_nonneg (x y : MyRat) (hx : 0 ≤ x) (hy : 0 ≤ y) : 0 ≤ x * y := by
+  sorry
 
 instance : IsOrderedAddMonoid MyRat where
   add_le_add_left := add_le_add_left
