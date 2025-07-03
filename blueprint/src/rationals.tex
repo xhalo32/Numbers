@@ -590,8 +590,8 @@ Can you see why it corresponds to the ``usual definition'' when we think that $x
 \end{proof}
 
 \begin{lemma}
-    \label{MyRat.nonneg_inv}
-    \lean{MyRat.nonneg_inv}
+    \label{MyRat.isNonneg_inv_isNonneg}
+    \lean{MyRat.isNonneg_inv_isNonneg}
     \uses{MyRat.IsNonneg, MyRat.inv}
     \leanok
     Let $x$ be in $\MyRat$ be nonnegative. Then $x^{-1}$ is nonnegative.
@@ -668,7 +668,7 @@ Let $x$ and $y$ in $\MyRat$. We write $x \leq y$ if $y - x$ is nonnegative.
 \begin{proof}
     \uses{MyRat.nonneg_neg}
     \leanok
-    It follows from Lemma~\ref{MyRat.MyRat.nonneg_neg}.
+    It follows from Lemma~\ref{MyRat.nonneg_neg}.
 \end{proof}
 
 It follows that $\leq$ is an order relation.
