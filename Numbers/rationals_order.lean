@@ -169,12 +169,12 @@ the naturals and integers to the rationals.
 
 /-- The natural map from the integers to the rationals
 preserves and reflects `≤`. -/
-lemma j_le (p q : MyInt) : j p ≤ j q ↔ p ≤ q := by
+lemma j_le_iff (p q : MyInt) : j p ≤ j q ↔ p ≤ q := by
   sorry
 
 /-- The natural map from the naturals to the rationals preserves
 and reflects `≤`. -/
-lemma i_le (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
+lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
   sorry
 
 /-!

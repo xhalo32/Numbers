@@ -502,3 +502,101 @@ It follows from unravelling all the definitions.
     \leanok
 Exercice.
 \end{proof}
+
+\subsection{Nonegativity}
+
+Before defining the order on $\MyRat$, let's define the notion of nonnegativity.
+
+\begin{definition}
+    \label{MyRat.IsNonneg}
+    \lean{MyRat.IsNonneg}
+    \uses{MyRat, MyRat.zero}
+    \leanok
+Given $x = (a,b)$ in $\MyRat$, we say that $x$ is \emph{nonnegative} if $a \geq 0$ and $0 < 0$.
+
+Can you see why it corresponds to the ``usual definition'' when we think that $x = a/b$?
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.zero_nonneg}
+    \lean{MyRat.zero_nonneg}
+    \uses{MyRat.IsNonneg}
+    \leanok
+    We have that $0$ in $\MyRat$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Obvious.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.one_nonneg}
+    \lean{MyRat.one_nonneg}
+    \uses{MyRat.IsNonneg, MyRat.one}
+    \leanok
+    We have that $1$ in $\MyRat$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Obvious.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.nonneg_neg}
+    \lean{MyRat.nonneg_neg}
+    \uses{MyRat.IsNonneg, MyRat.neg}
+    \leanok
+    Let $x$ be in $\MyRat$ such that both $x$ and $-x$ are nonnegative. Then $x = 0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Unravelling all the definitions we end up with $a$, $b$, $c$ and $d$ in $\MyInt$ such that $0 \leq a$, $0 < b$, $0 \leq c$, $0 < d$ and $-(a*d)=b*c$. This implies $a=0$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.nonneg_neg_of_not_nonneg}
+    \lean{MyRat.nonneg_neg_of_not_nonneg}
+    \uses{MyRat.IsNonneg, MyRat.neg}
+    \leanok
+    Let $x$ be in $\MyRat$ such that $x$ is not nonnegative. Then $-x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Annoying but easy, left as an exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.isNonneg_add_isNonneg}
+    \lean{MyRat.isNonneg_add_isNonneg}
+    \uses{MyRat.IsNonneg, MyRat.add}
+    \leanok
+    Let $x$ and $y$ be in $\MyRat$ both nonnegative. Then $x+y$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.isNonneg_mul_isNonneg}
+    \lean{MyRat.isNonneg_mul_isNonneg}
+    \uses{MyRat.IsNonneg, MyRat.mul}
+    \leanok
+    Let $x$ and $y$ be in $\MyRat$ both nonnegative. Then $x*y$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.nonneg_inv}
+    \lean{MyRat.nonneg_inv}
+    \uses{MyRat.IsNonneg, MyRat.inv}
+    \leanok
+    Let $x$ be in $\MyRat$ be nonnegative. Then $x^{-1}$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Exercice.
+\end{proof}
