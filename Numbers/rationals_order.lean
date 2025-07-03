@@ -186,7 +186,7 @@ lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
 def le_total (a b : MyRat) : a ≤ b ∨ b ≤ a := by
   sorry
 
-noncomputable instance : LinearOrder MyRat where
+noncomputable instance linearOrder : LinearOrder MyRat where
   le_total := le_total
   toDecidableLE := Classical.decRel _
 
