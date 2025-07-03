@@ -340,6 +340,10 @@ noncomputable instance linearOrder : LinearOrder MyInt where
 lemma zero_le_one : (0 : MyInt) ≤ 1 := by
   sorry
 
+/-- The natural map from the naturals to the integers preserves and reflects `≤`. -/
+lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
+  sorry
+
 /-
 
 ## Interaction between ordering and algebraic structure

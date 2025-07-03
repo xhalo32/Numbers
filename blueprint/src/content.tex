@@ -555,6 +555,21 @@ It follows that $\leq$ is an order relation.
     this is obvious.
 \end{proof}
 
+\begin{lemma}
+    \label{MyInt.i_le_iff}
+    \lean{MyInt.i_le_iff}
+    \leanok
+    Given two natural numbers $a$ and $b$, we have $i(a) \leq b$ if and only if $a \leq b$.
+\end{lemma}
+\begin{proof}
+    \uses{MyInt.i, MyInt.i_add, MyInt.i_injective}
+    \leanok
+    \begin{itemize}
+        \item If $i(a) \leq i(b)$, let $n$ be such that $i(b) = i(a)+i(n)=i(a+n)$. We obtain $b = a + n$ by injectivity of $i$ and so $a \leq b$.
+        \item If $a \leq b$, let $k$ be such that $b = a + k$. We can use $k$ to show that $i(a) \leq i(b)$.
+    \end{itemize}
+\end{proof}
+
 \subsection{Interaction between the order and the ring structure}
 
 \begin{lemma}
