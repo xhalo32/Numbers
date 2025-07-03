@@ -600,3 +600,75 @@ Can you see why it corresponds to the ``usual definition'' when we think that $x
     \leanok
     Exercice.
 \end{proof}
+
+\subsection{The order}
+
+\begin{definition}
+    \label{MyRat.le}
+    \lean{MyRat.le}
+    \uses{MyRat.IsNonneg, MyRat.field}
+    \leanok
+Let $x$ and $y$ in $\MyRat$. We write $x \leq y$ if $y - x$ is nonnegative.
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.zero_le_iff_IsNonneg}
+    \lean{MyRat.zero_le_iff_IsNonneg}
+    \uses{MyRat.zero, MyRat.le}
+    \leanok
+    We have that $0 \leq x$ if and only if $x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+    Clear.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.zero_le_one}
+    \lean{MyRat.zero_le_one}
+    \leanok
+    In $\MyRat$ we have that $0 \leq 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.zero, MyRat.one_nonneg}
+    \leanok
+    Clear because of Lemma~\ref{MyRat.one_nonneg}.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.le_refl}
+    \lean{MyRat.le_refl}
+    \leanok
+    The relation $\leq$ on $\MyRat$ is reflexive.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.le, MyRat.zero_nonneg}
+    \leanok
+    Clear because of Lemma~\ref{MyRat.zero_nonneg}.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.le_trans}
+    \lean{MyRat.le_trans}
+    \leanok
+    The relation $\leq$ on $\MyRat$ is transitive.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.isNonneg_add_isNonneg}
+    \leanok
+ It follows from Lemma~\ref{MyRat.isNonneg_add_isNonneg}.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.le_antisymm}
+    \lean{MyRat.le_antisymm}
+    \leanok
+    The relation $\leq$ on $\MyRat$ is antisymmetric.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.nonneg_neg}
+    \leanok
+    It follows from Lemma~\ref{MyRat.MyRat.nonneg_neg}.
+\end{proof}
+
+It follows that $\leq$ is an order relation.
