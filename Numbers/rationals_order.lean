@@ -4,12 +4,6 @@ import Numbers.rationals
 
 # The order on the rationals
 
-Note: if you are just a *user* of the rationals, you don't ever need
-to read this file. This file is for engineers only. The user-facing
-API is just the fact that
-`#synth LinearOrder MyRat` and
-`#synth IsStrictOrderedRing MyRat` both work.
-
 We prove that the rationals are a total order, and also that the ordering
 plays well with the ring structure.
 
