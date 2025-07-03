@@ -913,7 +913,7 @@ Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
     We define a map
 \begin{gather*}
     i \colon \N \to \MyRat \\
-    n \mapsto \llbracket (n,1) \rrbracket
+    n \mapsto \llbracket (\MyInt.i n,1) \rrbracket
 \end{gather*}
 \end{definition}
 
@@ -953,12 +953,12 @@ i(a+b) = i(a) + i(b)
 \begin{proof}
     \uses{MyRat.add, MyRat.i}
     \leanok
-    We have $i(a+b) = \llbracket (a+b, 1) \rrbracket$, $i(a) = \llbracket (a, 1) \rrbracket$ and
-    $i(b) = \llbracket (b, 1) \rrbracket$, so we need to prove that
+    We have $i(a+b) = \llbracket (\MyInt.i (a+b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket$, $i(a) = \llbracket (\MyInt.i(a), 1) \rrbracket$ and
+    $i(b) = \llbracket (\MyInt.i (b), 1) \rrbracket$, so we need to prove that
 \[
-\llbracket (a+b, 1) \rrbracket = \llbracket (a, 1) \rrbracket + \llbracket (b, 1) \rrbracket
+\llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) \rrbracket + \llbracket (\MyInt.i (b), 1) \rrbracket
 \]
-that is obvious from the definition.
+that is obvious from the definition ().
 \end{proof}
 
 \begin{lemma}
@@ -973,12 +973,7 @@ i(a*b) = i(a) * i(b)
 \begin{proof}
     \uses{MyRat.mul, MyRat.i}
     \leanok
-    We have $i(a*b) = \llbracket (a*b, 0) \rrbracket$, $i(a) = \llbracket (a, 1) \rrbracket$ and
-    $i(b) = \llbracket (b, 1) \rrbracket$, so we need to prove that
-\[
-\llbracket (a*b, 1) \rrbracket = \llbracket (a, 1) \rrbracket * \llbracket (b, 1) \rrbracket
-\]
-that is obvious from the definition.
+Similar to the proof of Lemma~\ref{MyRat.i_add}.
 \end{proof}
 
 \begin{lemma}
@@ -990,5 +985,96 @@ that is obvious from the definition.
 \begin{proof}
     \uses{MyRat.i}
     \leanok
-    Let $a$ be such that $i(a)=0$. This means $\llbracket (a,1) \rrbracket = \llbracket (0,1) \rrbracket$ so $a * 1 = 1 * 0$ and hence $a = 0$.
+    Let $a$ be such that $i(a)=0$. This means $\llbracket (\MyInt.i a,1) \rrbracket = \llbracket (0,1) \rrbracket$ so $(\MyInt.i a) * 1 = 1 * 0$ and hence $\MyInt.i a = 0$ so $a = 0$.
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $j \colon \MyInt \to \MyRat$}{The inclusion}}
+\begin{definition}
+    \label{MyRat.j}
+    \lean{MyRat.j}
+    \uses{MyRat}
+    \leanok
+    We define a map
+\begin{gather*}
+    j \colon \MyInt \to \MyRat \\
+    n \mapsto \llbracket (n,1) \rrbracket
+\end{gather*}
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.j_zero}
+    \lean{MyRat.j_zero}
+    \leanok
+We have that $j(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.j}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_one}
+    \lean{MyRat.j_one}
+    \leanok
+We have that $j(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.j}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_add}
+    \lean{MyRat.j_add}
+    \leanok
+For all $a$ and $b$ in $\MyInt$ we have that
+\[
+j(a+b) = j(a) + j(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.add, MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_mul}
+    \lean{MyRat.j_mul}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+j(a*b) = j(a) * j(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.mul, MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_injective}
+    \lean{MyRat.j_injective}
+    \leanok
+    We have that $j$ is injective.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_comp_eq_i}
+    \lean{MyRat.j_comp_eq_i}
+    \leanok
+    Let $n$ be a natural number. Then $\MyRat.j (\MyInt.i (n)) = MyRat.i (n)$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.i, MyRat.j}
+    \leanok
+It follows from unravelling all the definitions.
 \end{proof}
