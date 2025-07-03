@@ -3,6 +3,7 @@
 ## Lake
 .lake/*
 .cache/*
+/Numbers/Nopush
 ## Blueprint
 /blueprint/print/print.log
 /blueprint/web/
