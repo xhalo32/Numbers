@@ -415,7 +415,7 @@ lemma j_injective (a b : MyInt) : j a = j b ↔ a = b := by
 -- Finally we check that the `i` and `j` commute with the natural
 -- map `↑` from `ℕ` to `MyInt`:
 
-lemma j_coe_eq_i : ∀ (n : ℕ), j (↑n : MyInt) = i n := by
+lemma j_comp_eq_i (n : ℕ) : j (MyInt.i n) = i n := by
   sorry
 
 -- We can now give a formula for `⟦(a, b)⟧` using `j a` and `j b`.
