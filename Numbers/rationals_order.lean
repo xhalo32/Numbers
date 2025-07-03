@@ -9,8 +9,6 @@ plays well with the ring structure.
 
 -/
 
-open MyPrerat
-
 namespace MyRat
 
 /-
