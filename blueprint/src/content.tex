@@ -420,10 +420,10 @@ i(a*b) = i(a) * i(b)
 \begin{proof}
     \uses{MyInt.mul, MyInt.i}
     \leanok
-    We have $i(a+b) = \llbracket (a+b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
+    We have $i(a*b) = \llbracket (a*b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
     $i(b) = \llbracket (b, 0) \rrbracket$, so we need to prove that
 \[
-\llbracket (a+b, 0) \rrbracket = \llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket
+\llbracket (a*b, 0) \rrbracket = \llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket
 \]
 By definition of multiplication we have
 \[
@@ -902,4 +902,93 @@ Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
     \uses{MyRat.commRing, MyRat.mul_inv_cancel}
     \leanok
     Clear because of \ref{MyRat.mul_inv_cancel}.
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $i \colon \N \to \MyRat$}{The inclusion}}
+\begin{definition}
+    \label{MyRat.i}
+    \lean{MyRat.i}
+    \uses{MyRat}
+    \leanok
+    We define a map
+\begin{gather*}
+    i \colon \N \to \MyRat \\
+    n \mapsto \llbracket (n,1) \rrbracket
+\end{gather*}
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.i_zero}
+    \lean{MyRat.i_zero}
+    \leanok
+We have that $i(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.i}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_one}
+    \lean{MyRat.i_one}
+    \leanok
+We have that $i(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.i}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_add}
+    \lean{MyRat.i_add}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a+b) = i(a) + i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.add, MyRat.i}
+    \leanok
+    We have $i(a+b) = \llbracket (a+b, 1) \rrbracket$, $i(a) = \llbracket (a, 1) \rrbracket$ and
+    $i(b) = \llbracket (b, 1) \rrbracket$, so we need to prove that
+\[
+\llbracket (a+b, 1) \rrbracket = \llbracket (a, 1) \rrbracket + \llbracket (b, 1) \rrbracket
+\]
+that is obvious from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_mul}
+    \lean{MyRat.i_mul}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a*b) = i(a) * i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.mul, MyRat.i}
+    \leanok
+    We have $i(a*b) = \llbracket (a*b, 0) \rrbracket$, $i(a) = \llbracket (a, 1) \rrbracket$ and
+    $i(b) = \llbracket (b, 1) \rrbracket$, so we need to prove that
+\[
+\llbracket (a*b, 1) \rrbracket = \llbracket (a, 1) \rrbracket * \llbracket (b, 1) \rrbracket
+\]
+that is obvious from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_injective}
+    \lean{MyRat.i_injective}
+    \leanok
+    We have that $i$ is injective.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.i}
+    \leanok
+    Let $a$ be such that $i(a)=0$. This means $\llbracket (a,1) \rrbracket = \llbracket (0,1) \rrbracket$ so $a * 1 = 1 * 0$ and hence $a = 0$.
 \end{proof}
