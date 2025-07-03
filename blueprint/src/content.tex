@@ -865,3 +865,29 @@ Thanks to Lemma~\ref{MyPrerat.inv_quotient} this is well defined.
     All the proofs are essentially identical, going to $\MyInt$, unravelling the definition and then
     checking the equality holds in $\MyInt$.
 \end{proof}
+
+\begin{lemma}
+    \label{MyRat.zero_ne_one}
+    \lean{MyRat.zero_ne_one}
+    \leanok
+In $\MyRat$ we have $0 \neq 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.zero, MyRat.one}
+    If $0 = 1$ by definition we would have $\llbracket (0,1) \rrbracket = \llbracket (1,1) \rrbracket$
+    so $0*1=1*0$ in $\MyInt$, that is absurd.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.mul_inv_cancel}
+    \lean{MyRat.mul_inv_cancel}
+    \leanok
+Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.inv, MyRat.mul}
+    Let $x = \llbracket (a,b) \rrbracket$, with $b \neq 0$. Since $x \neq 0$ we have $a \neq 0$ and so
+    $x^{-1} = \llbracket (b,a) \rrbracket$. The lemma follows by definition of multiplication.
+\end{proof}

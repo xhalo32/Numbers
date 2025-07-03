@@ -341,7 +341,7 @@ instance commRing : CommRing MyRat where
 lemma zero_ne_one : (0 : MyRat) ≠ 1 := by
   sorry
 
-lemma mul_inv_cancel (a : MyRat) (ha : a ≠ 0) : a * a⁻¹ = 1 := by
+lemma mul_inv_cancel (x : MyRat) (hx : x ≠ 0) : x * x⁻¹ = 1 := by
   sorry
 
 noncomputable
