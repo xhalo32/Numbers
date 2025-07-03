@@ -1,0 +1,504 @@
+\chapter{The rationals}
+
+We can now define the rationals, starting with our copy of the integers $\MyInt$.
+
+We follow a similar path to the one for $\MyInt$.
+
+\section{The \emph{prerationals}}
+
+$\MyRat$ will be a quotient of a type called $\MyPrerat$.
+
+\begin{definition}
+    \label{MyPrerat}
+    \lean{MyPrerat}
+    \leanok
+    \uses{MyInt}
+    Let $\MyPrerat$ be $MyInt \times MyInt \backslash \{0\}$
+\end{definition}
+
+\begin{definition}
+    \label{MyPrerat.R}
+    \lean{MyPrerat.R}
+    \leanok
+    \uses{MyPrerat}
+We define a relation $R$ on $\MyPrerat$ as follows: $(a,b)$ and $(c, d)$ are related if and only if
+\[
+a * d = b * c
+\]
+\end{definition}
+
+\begin{lemma}
+$R$ is a reflexive relation.
+    \label{MyPrerat.R_refl}
+    \lean{MyPrerat.R_refl}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+$R$ is a symmetric relation.
+    \label{MyPrerat.R_symm}
+    \lean{MyPrerat.R_symm}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+$R$ is a transitive relation.
+    \label{MyPrerat.R_trans}
+    \lean{MyPrerat.R_trans}
+    \leanok
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R}
+    Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrerat.R_equiv}
+    \lean{MyPrerat.R_equiv}
+    \leanok
+We have that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
+$x R y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrerat.R_refl, MyPrerat.R_symm, MyPrerat.R_trans}
+Clear from Lemma~\ref{MyPrerat.R_refl}, Lemma~\ref{MyPrerat.R_symm} and Lemma~\ref{MyPrerat.R_trans}.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.neg}
+    \lean{MyPrerat.neg}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{negation} on $\MyPrerat$ as follows: the negation of $x = (a,b)$ is
+$(-a,b)$:
+\[
+-x = -(a,b) = (-a,b)
+\]
+Note that it automatically well defined (meaning that second component of $(-a,b)$ is different from $0$).
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.neg_quotient}
+    \lean{MyPrerat.neg_quotient}
+    \leanok
+If $x \approx x'$, then $-x \approx -x'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.neg}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.add}
+    \lean{MyPrerat.add}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{addition} on $\MyPrerat$ as follows: the addition of $x = (a,b)$
+and $y = (b, c)$ is
+\[
+x + y = (a,b) + (c,d) = (a * d + b * c, b*d)
+\]
+Do you see why it is well defined?
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.add_quotient}
+    \lean{MyPrerat.add_quotient}
+    \leanok
+If $x \approx x'$ and $y \approx y'$, then $x + y \approx x' + y'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.add}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.mul}
+    \lean{MyPrerat.mul}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{multiplication} on $\MyPrerat$ as follows: the multiplication of $x = (a,b)$ and $y = (b, c)$ is
+\[
+x * y = (a,b) * (c,d) = (a*c, b*d)
+\]
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.mul_quotient}
+    \lean{MyPrerat.mul_quotient}
+    \leanok
+If $x \approx x'$ and $y \approx y'$, then $x * y \approx x' * y'$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.mul}
+\leanok
+Exercice.
+\end{proof}
+
+\begin{definition}
+    \label{MyPrerat.inv}
+    \lean{MyPrerat.inv}
+    \leanok
+    \uses{MyPrerat.R}
+We define an operation, called \emph{negation} on $\MyPrerat$ as follows: the inverse of $x = (a,b)$ is:
+\[
+\mbox{if} b \neq 0 \mbox{ then } x^{-1} = (b, a), \mbox{ otherwise } x^{-1} = (0, 1)
+\]
+Note that $x^{-1}$ is \emph{always} defined!
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrerat.inv_quotient}
+    \lean{MyPrerat.inv_quotient}
+    \leanok
+If $x \approx x'$, then $x^{-1} \approx x'^{-1}$.
+\end{lemma}
+\begin{proof}
+\uses{MyPrerat.inv}
+\leanok
+Exercice.
+\end{proof}
+
+\section{The rationals}
+
+\subsection{Definitions}
+
+\begin{definition}
+    \label{MyRat}
+    \lean{MyRat}
+    \leanok
+    \uses{MyPrerat.R_equiv}
+    We define our rationals $\MyRat$ as
+\[
+\MyRat = \MyPrerat \, / \approx
+\]
+We will write $\llbracket (a, b) \rrbracket$ for the class of $(a,b)$.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.zero}
+    \lean{MyRat.zero}
+    \uses{MyPrerat.R_equiv}
+    \leanok
+We define the zero of $\MyRat$, denoted $0$ as the class of $(0,1)$ (note that $1 \neq 0$ in $\MyInt$).
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.one}
+    \lean{MyRat.one}
+    \uses{MyPrerat.R_equiv}
+    \leanok
+We define the one of $\MyRat$, denoted $1$ as the class of $(1,1)$ (note that $1 \neq 0$ in $\MyInt$).
+\end{definition}
+
+\subsection{Commutative ring structure}
+
+\begin{definition}
+    \label{MyRat.neg}
+    \lean{MyRat.neg}
+    \uses{MyPrerat.R_equiv, MyPrerat.neg_quotient}
+    \leanok
+We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+\[
+-x = \llbracket -(a, b) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.neg_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.add}
+    \lean{MyRat.add}
+    \uses{MyPrerat.R_equiv, MyPrerat.add_quotient}
+    \leanok
+We define the addition of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x + y = \llbracket (a,b)+(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.add_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.mul}
+    \lean{MyRat.mul}
+    \uses{MyPrerat.R_equiv, MyPrerat.mul_quotient}
+    \leanok
+We define the multiplication of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+\[
+x * y = \llbracket (a, b)*(c,d) \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.mul_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyRat.inv}
+    \lean{MyRat.inv}
+    \uses{MyPrerat.R_equiv, MyPrerat.inv_quotient}
+    \leanok
+We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+\[
+x^{-1} = \llbracket (a, b)^{-1} \rrbracket
+\]
+Thanks to Lemma~\ref{MyPrerat.inv_quotient} this is well defined.
+\end{definition}
+
+\begin{proposition}
+    \label{MyRat.commRing}
+    \lean{MyRat.commRing}
+    \leanok
+    $\MyRat$ with addition and multiplication is a commutative ring.
+\end{proposition}
+\begin{proof}
+    \uses{MyRat.add, MyRat.mul, MyRat.zero, MyRat.one}
+    \leanok
+    We have to prove various properties, namely:
+    \begin{itemize}
+        \item addition is associative
+        \item $0$ works as neutral element for addition (on both sides)
+        \item existence of an inverse for addition (we prove that $x + (-x) = (-x) + x = 0$)
+        \item addition is commutative
+        \item left and right distributivity of multiplication with respect to addition
+        \item associativity of multiplication
+        \item $1$ works as neutral element for multiplication (on both sides)
+    \end{itemize}
+    All the proofs are essentially identical, going to $\MyInt$, unravelling the definition and then
+    checking the equality holds in $\MyInt$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.zero_ne_one}
+    \lean{MyRat.zero_ne_one}
+    \leanok
+In $\MyRat$ we have $0 \neq 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.zero, MyRat.one}
+    If $0 = 1$ by definition we would have $\llbracket (0,1) \rrbracket = \llbracket (1,1) \rrbracket$
+    so $0*1=1*0$ in $\MyInt$, that is absurd.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.mul_inv_cancel}
+    \lean{MyRat.mul_inv_cancel}
+    \leanok
+Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyRat.inv, MyRat.mul}
+    Let $x = \llbracket (a,b) \rrbracket$, with $b \neq 0$. Since $x \neq 0$ we have $a \neq 0$ and so
+    $x^{-1} = \llbracket (b,a) \rrbracket$. The lemma follows by definition of multiplication.
+\end{proof}
+
+\begin{proposition}
+    \label{MyRat.field}
+    \lean{MyRat.field}
+    \leanok
+    $\MyRat$ with addition and multiplication is a field.
+\end{proposition}
+\begin{proof}
+    \uses{MyRat.commRing, MyRat.mul_inv_cancel}
+    \leanok
+    Clear because of Lemma~\ref{MyRat.mul_inv_cancel}.
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $i \colon \N \to \MyRat$}{The inclusion}}
+\begin{definition}
+    \label{MyRat.i}
+    \lean{MyRat.i}
+    \uses{MyRat}
+    \leanok
+    We define a map
+\begin{gather*}
+    i \colon \N \to \MyRat \\
+    n \mapsto \llbracket (\MyInt.i n,1) \rrbracket
+\end{gather*}
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.i_zero}
+    \lean{MyRat.i_zero}
+    \leanok
+We have that $i(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.i}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_one}
+    \lean{MyRat.i_one}
+    \leanok
+We have that $i(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.i}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_add}
+    \lean{MyRat.i_add}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a+b) = i(a) + i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.add, MyRat.i}
+    \leanok
+    We have $i(a+b) = \llbracket (\MyInt.i (a+b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket$, $i(a) = \llbracket (\MyInt.i(a), 1) \rrbracket$ and
+    $i(b) = \llbracket (\MyInt.i (b), 1) \rrbracket$, so we need to prove that
+\[
+\llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) \rrbracket + \llbracket (\MyInt.i (b), 1) \rrbracket
+\]
+that is obvious from the definition ().
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_mul}
+    \lean{MyRat.i_mul}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+i(a*b) = i(a) * i(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.mul, MyRat.i}
+    \leanok
+Similar to the proof of Lemma~\ref{MyRat.i_add}.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.i_injective}
+    \lean{MyRat.i_injective}
+    \leanok
+    We have that $i$ is injective.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.i}
+    \leanok
+    Let $a$ be such that $i(a)=0$. This means $\llbracket (\MyInt.i a,1) \rrbracket = \llbracket (0,1) \rrbracket$ so $(\MyInt.i a) * 1 = 1 * 0$ and hence $\MyInt.i a = 0$ so $a = 0$.
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $j \colon \MyInt \to \MyRat$}{The inclusion}}
+\begin{definition}
+    \label{MyRat.j}
+    \lean{MyRat.j}
+    \uses{MyRat}
+    \leanok
+    We define a map
+\begin{gather*}
+    j \colon \MyInt \to \MyRat \\
+    n \mapsto \llbracket (n,1) \rrbracket
+\end{gather*}
+\end{definition}
+
+\begin{lemma}
+    \label{MyRat.j_zero}
+    \lean{MyRat.j_zero}
+    \leanok
+We have that $j(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.j}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_one}
+    \lean{MyRat.j_one}
+    \leanok
+We have that $j(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat, MyRat.j}
+    \leanok
+Clear from the definition.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_add}
+    \lean{MyRat.j_add}
+    \leanok
+For all $a$ and $b$ in $\MyInt$ we have that
+\[
+j(a+b) = j(a) + j(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.add, MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_mul}
+    \lean{MyRat.j_mul}
+    \leanok
+For all $a$ and $b$ in $\N$ we have that
+\[
+j(a*b) = j(a) * j(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.mul, MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_injective}
+    \lean{MyRat.j_injective}
+    \leanok
+    We have that $j$ is injective.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.j_comp_eq_i}
+    \lean{MyRat.j_comp_eq_i}
+    \leanok
+    Let $n$ be a natural number. Then $\MyRat.j (\MyInt.i (n)) = MyRat.i (n)$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.i, MyRat.j}
+    \leanok
+It follows from unravelling all the definitions.
+\end{proof}
+
+\begin{lemma}
+    \label{MyRat.Quotient.mk_def}
+    \lean{MyRat.Quotient.mk_def}
+    \leanok
+    Let $a$ and $b$ be in $\MyInt$ with $b \neq 0$. Then $\llbracket (a, b) \rrbracket = j(a)*j(b)^{-1}$.
+\end{lemma}
+\begin{proof}
+    \uses{MyRat.inv, MyRat.mul, MyRat.j}
+    \leanok
+Exercice.
+\end{proof}
