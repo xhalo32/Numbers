@@ -215,7 +215,7 @@ that is $x * y \approx  x'*y'$.
 \[
 \MyInt = \MyPreint \, / \approx
 \]
-We will write $\llbracket (a, b) \rrbracket$ for the class of $(a,b)$.
+We will write $⟦ (a, b) ⟧$ for the class of $(a,b)$.
 \end{definition}
 
 \begin{definition}
@@ -241,9 +241,9 @@ We define the one of $\MyInt$, denoted $1$ as the class of $(1,0)$.
     \lean{MyInt.neg}
     \uses{MyPreint.R_equiv, MyPreint.neg_quotient}
     \leanok
-We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+We define the negation of $x = ⟦ (a, b) ⟧$ in $\MyInt$ as
 \[
--x = \llbracket -(a, b) \rrbracket
+-x = ⟦ -(a, b) ⟧
 \]
 Thanks to Lemma~\ref{MyPreint.neg_quotient} this is well defined.
 \end{definition}
@@ -253,9 +253,9 @@ Thanks to Lemma~\ref{MyPreint.neg_quotient} this is well defined.
     \lean{MyInt.add}
     \uses{MyPreint.R_equiv, MyPreint.add_quotient}
     \leanok
-We define the addition of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+We define the addition of $x = ⟦ (a, b) ⟧$ and $y = ⟦ (c, d) ⟧$ in $\MyInt$ as
 \[
-x + y = \llbracket (a, b)+(c,d) \rrbracket
+x + y = ⟦ (a, b)+(c,d) ⟧
 \]
 Thanks to Lemma~\ref{MyPreint.add_quotient} this is well defined.
 \end{definition}
@@ -265,9 +265,9 @@ Thanks to Lemma~\ref{MyPreint.add_quotient} this is well defined.
     \lean{MyInt.mul}
     \uses{MyPreint.R_equiv, MyPreint.mul_quotient}
     \leanok
-We define the multiplication of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+We define the multiplication of $x = ⟦ (a, b) ⟧$ and $y = ⟦ (c, d) ⟧$ in $\MyInt$ as
 \[
-x * y = \llbracket (a, b)*(c,d) \rrbracket
+x * y = ⟦ (a, b)*(c,d) ⟧
 \]
 Thanks to Lemma~\ref{MyPreint.mul_quotient} this is well defined.
 \end{definition}
@@ -283,7 +283,7 @@ Thanks to Lemma~\ref{MyPreint.mul_quotient} this is well defined.
     \leanok
 To prove the lemma it is enough to prove that, for all $a$, $b$, $c$, $d$, $e$ and $f$ in $\N$, we have
 \[
-(\llbracket (a, b) \rrbracket+ \llbracket (c, d) \rrbracket) + \llbracket (e, f) \rrbracket = \llbracket (a, b) \rrbracket + (\llbracket (c, d) \rrbracket + \llbracket (e, f) \rrbracket)
+(⟦ (a, b) ⟧+ ⟦ (c, d) ⟧) + ⟦ (e, f) ⟧ = ⟦ (a, b) ⟧ + (⟦ (c, d) ⟧ + ⟦ (e, f) ⟧)
 \]
 Unravelling the definitions this is
 \[
@@ -323,7 +323,7 @@ In $\MyInt$ we have $0 \neq 1$.
 \begin{proof}
     \leanok
     \uses{MyInt.zero, MyInt.one}
-    If $0 = 1$ by definition we would have $\llbracket (0,0) \rrbracket = \llbracket (1,0) \rrbracket$
+    If $0 = 1$ by definition we would have $⟦ (0,0) ⟧ = ⟦ (1,0) ⟧$
     so $0+1=0+0$ in $\N$, that is absurd.
 \end{proof}
 
@@ -360,7 +360,7 @@ We have $0 = y*x-z*x=(y-z)*x$. Since $x \neq 0$ we have by Lemma~\ref{MyInt.mul_
     We define a map
 \begin{gather*}
     i \colon \N \to \MyInt \\
-    n \mapsto \llbracket (n,0) \rrbracket
+    n \mapsto ⟦ (n,0) ⟧
 \end{gather*}
 \end{definition}
 
@@ -400,10 +400,10 @@ i(a+b) = i(a) + i(b)
 \begin{proof}
     \uses{MyInt.add, MyInt.i}
     \leanok
-    We have $i(a+b) = \llbracket (a+b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
-    $i(b) = \llbracket (b, 0) \rrbracket$, so we need to prove that
+    We have $i(a+b) = ⟦ (a+b, 0) ⟧$, $i(a) = ⟦ (a, 0) ⟧$ and
+    $i(b) = ⟦ (b, 0) ⟧$, so we need to prove that
 \[
-\llbracket (a+b, 0) \rrbracket = \llbracket (a, 0) \rrbracket + \llbracket (b, 0) \rrbracket
+⟦ (a+b, 0) ⟧ = ⟦ (a, 0) ⟧ + ⟦ (b, 0) ⟧
 \]
 that is obvious from the definition.
 \end{proof}
@@ -420,14 +420,14 @@ i(a*b) = i(a) * i(b)
 \begin{proof}
     \uses{MyInt.mul, MyInt.i}
     \leanok
-    We have $i(a*b) = \llbracket (a*b, 0) \rrbracket$, $i(a) = \llbracket (a, 0) \rrbracket$ and
-    $i(b) = \llbracket (b, 0) \rrbracket$, so we need to prove that
+    We have $i(a*b) = ⟦ (a*b, 0) ⟧$, $i(a) = ⟦ (a, 0) ⟧$ and
+    $i(b) = ⟦ (b, 0) ⟧$, so we need to prove that
 \[
-\llbracket (a*b, 0) \rrbracket = \llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket
+⟦ (a*b, 0) ⟧ = ⟦ (a, 0) ⟧ * ⟦ (b, 0) ⟧
 \]
 By definition of multiplication we have
 \[
-\llbracket (a, 0) \rrbracket * \llbracket (b, 0) \rrbracket = \llbracket (a*c+0*0, a*0+0*b) \rrbracket
+⟦ (a, 0) ⟧ * ⟦ (b, 0) ⟧ = ⟦ (a*c+0*0, a*0+0*b) ⟧
 \]
 and the lemma follows.
 \end{proof}
@@ -441,7 +441,7 @@ and the lemma follows.
 \begin{proof}
     \uses{MyInt.i}
     \leanok
-    Let $a$ and $b$ such that $i(a)=i(b)$. This means $\llbracket (a,0) \rrbracket = \llbracket (b,0) \rrbracket$ so $a + 0 = 0 + b$ and hence $a = b$.
+    Let $a$ and $b$ such that $i(a)=i(b)$. This means $⟦ (a,0) ⟧ = ⟦ (b,0) ⟧$ so $a + 0 = 0 + b$ and hence $a = b$.
 \end{proof}
 
 \subsection{The order}
@@ -511,21 +511,21 @@ It follows that $\leq$ is an order relation.
 \begin{proof}
     \uses{MyInt.le, MyInt.i_zero, MyInt.i_injective}
     \leanok
-    Let $x$ and $y$ by in $\MyInt$. We can write $x = \llbracket (a,b) \rrbracket$ and
-    $y = \llbracket (c,d) \rrbracket$ and we need to prove that
-    $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$ or $\llbracket (c,d) \rrbracket \leq \llbracket (a,b) \rrbracket$. Let's consider two cases (we use that the order on $\N$ is total):
+    Let $x$ and $y$ by in $\MyInt$. We can write $x = ⟦ (a,b) ⟧$ and
+    $y = ⟦ (c,d) ⟧$ and we need to prove that
+    $⟦ (a,b) ⟧ \leq ⟦ (c,d) ⟧$ or $⟦ (c,d) ⟧ \leq ⟦ (a,b) ⟧$. Let's consider two cases (we use that the order on $\N$ is total):
     \begin{itemize}
         \item if $a + d \leq b + c$ let $e$ be such that $b + c = a + d + e$. We prove that
-        $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$ using $e$. We have
+        $⟦ (a,b) ⟧ \leq ⟦ (c,d) ⟧$ using $e$. We have
         \[
-        \llbracket (a,b) \rrbracket+i(e) = \llbracket (a,b) \rrbracket + \llbracket (e,0) \rrbracket
-        = \llbracket (a+e,b+0) \rrbracket = \llbracket (a+e,b) \rrbracket
+        ⟦ (a,b) ⟧+i(e) = ⟦ (a,b) ⟧ + ⟦ (e,0) ⟧
+        = ⟦ (a+e,b+0) ⟧ = ⟦ (a+e,b) ⟧
         \]
-        We have that $\llbracket (a+e,b) \rrbracket = \llbracket (c,d) \rrbracket$ since
+        We have that $⟦ (a+e,b) ⟧ = ⟦ (c,d) ⟧$ since
         \[
         a+e+d=b+d
         \]
-        by our assumption on $e$ and so $\llbracket (a,b) \rrbracket \leq \llbracket (c,d) \rrbracket$.
+        by our assumption on $e$ and so $⟦ (a,b) ⟧ \leq ⟦ (c,d) ⟧$.
         \item the case $b + c \leq a + d$ is completely analogous.
     \end{itemize}
 \end{proof}

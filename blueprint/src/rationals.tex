@@ -186,7 +186,7 @@ Exercice.
 \[
 \MyRat = \MyPrerat \, / \approx
 \]
-We will write $\llbracket (a, b) \rrbracket$ for the class of $(a,b)$.
+We will write $⟦ (a, b) ⟧$ for the class of $(a,b)$.
 \end{definition}
 
 \begin{definition}
@@ -212,9 +212,9 @@ We define the one of $\MyRat$, denoted $1$ as the class of $(1,1)$ (note that $1
     \lean{MyRat.neg}
     \uses{MyPrerat.R_equiv, MyPrerat.neg_quotient}
     \leanok
-We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+We define the negation of $x = ⟦ (a, b) ⟧$ in $\MyInt$ as
 \[
--x = \llbracket -(a, b) \rrbracket
+-x = ⟦ -(a, b) ⟧
 \]
 Thanks to Lemma~\ref{MyPrerat.neg_quotient} this is well defined.
 \end{definition}
@@ -224,9 +224,9 @@ Thanks to Lemma~\ref{MyPrerat.neg_quotient} this is well defined.
     \lean{MyRat.add}
     \uses{MyPrerat.R_equiv, MyPrerat.add_quotient}
     \leanok
-We define the addition of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+We define the addition of $x = ⟦ (a, b) ⟧$ and $y = ⟦ (c, d) ⟧$ in $\MyInt$ as
 \[
-x + y = \llbracket (a,b)+(c,d) \rrbracket
+x + y = ⟦ (a,b)+(c,d) ⟧
 \]
 Thanks to Lemma~\ref{MyPrerat.add_quotient} this is well defined.
 \end{definition}
@@ -236,9 +236,9 @@ Thanks to Lemma~\ref{MyPrerat.add_quotient} this is well defined.
     \lean{MyRat.mul}
     \uses{MyPrerat.R_equiv, MyPrerat.mul_quotient}
     \leanok
-We define the multiplication of $x = \llbracket (a, b) \rrbracket$ and $y = \llbracket (c, d) \rrbracket$ in $\MyInt$ as
+We define the multiplication of $x = ⟦ (a, b) ⟧$ and $y = ⟦ (c, d) ⟧$ in $\MyInt$ as
 \[
-x * y = \llbracket (a, b)*(c,d) \rrbracket
+x * y = ⟦ (a, b)*(c,d) ⟧
 \]
 Thanks to Lemma~\ref{MyPrerat.mul_quotient} this is well defined.
 \end{definition}
@@ -248,9 +248,9 @@ Thanks to Lemma~\ref{MyPrerat.mul_quotient} this is well defined.
     \lean{MyRat.inv}
     \uses{MyPrerat.R_equiv, MyPrerat.inv_quotient}
     \leanok
-We define the negation of $x = \llbracket (a, b) \rrbracket$ in $\MyInt$ as
+We define the negation of $x = ⟦ (a, b) ⟧$ in $\MyInt$ as
 \[
-x^{-1} = \llbracket (a, b)^{-1} \rrbracket
+x^{-1} = ⟦ (a, b)^{-1} ⟧
 \]
 Thanks to Lemma~\ref{MyPrerat.inv_quotient} this is well defined.
 \end{definition}
@@ -287,7 +287,7 @@ In $\MyRat$ we have $0 \neq 1$.
 \begin{proof}
     \leanok
     \uses{MyRat.zero, MyRat.one}
-    If $0 = 1$ by definition we would have $\llbracket (0,1) \rrbracket = \llbracket (1,1) \rrbracket$
+    If $0 = 1$ by definition we would have $⟦ (0,1) ⟧ = ⟦ (1,1) ⟧$
     so $0*1=1*0$ in $\MyInt$, that is absurd.
 \end{proof}
 
@@ -300,8 +300,8 @@ Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
 \begin{proof}
     \leanok
     \uses{MyRat.inv, MyRat.mul}
-    Let $x = \llbracket (a,b) \rrbracket$, with $b \neq 0$. Since $x \neq 0$ we have $a \neq 0$ and so
-    $x^{-1} = \llbracket (b,a) \rrbracket$. The lemma follows by definition of multiplication.
+    Let $x = ⟦ (a,b) ⟧$, with $b \neq 0$. Since $x \neq 0$ we have $a \neq 0$ and so
+    $x^{-1} = ⟦ (b,a) ⟧$. The lemma follows by definition of multiplication.
 \end{proof}
 
 \begin{proposition}
@@ -325,7 +325,7 @@ Let $x \neq 0$ be in $\MyRat$. Then $x * x^{-1} = 1$.
     We define a map
 \begin{gather*}
     i \colon \N \to \MyRat \\
-    n \mapsto \llbracket (\MyInt.i n,1) \rrbracket
+    n \mapsto ⟦ (\MyInt.i n,1) ⟧
 \end{gather*}
 \end{definition}
 
@@ -365,10 +365,10 @@ i(a+b) = i(a) + i(b)
 \begin{proof}
     \uses{MyRat.add, MyRat.i}
     \leanok
-    We have $i(a+b) = \llbracket (\MyInt.i (a+b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket$, $i(a) = \llbracket (\MyInt.i(a), 1) \rrbracket$ and
-    $i(b) = \llbracket (\MyInt.i (b), 1) \rrbracket$, so we need to prove that
+    We have $i(a+b) = ⟦ (\MyInt.i (a+b), 1) ⟧ = ⟦ (\MyInt.i (a), 1) + (\MyInt.i (b), 1) ⟧$, $i(a) = ⟦ (\MyInt.i(a), 1) ⟧$ and
+    $i(b) = ⟦ (\MyInt.i (b), 1) ⟧$, so we need to prove that
 \[
-\llbracket (\MyInt.i (a), 1) + (\MyInt.i (b), 1) \rrbracket = \llbracket (\MyInt.i (a), 1) \rrbracket + \llbracket (\MyInt.i (b), 1) \rrbracket
+⟦ (\MyInt.i (a), 1) + (\MyInt.i (b), 1) ⟧ = ⟦ (\MyInt.i (a), 1) ⟧ + ⟦ (\MyInt.i (b), 1) ⟧
 \]
 that is obvious from the definition ().
 \end{proof}
@@ -397,7 +397,7 @@ Similar to the proof of Lemma~\ref{MyRat.i_add}.
 \begin{proof}
     \uses{MyRat.i}
     \leanok
-    Let $a$ be such that $i(a)=0$. This means $\llbracket (\MyInt.i a,1) \rrbracket = \llbracket (0,1) \rrbracket$ so $(\MyInt.i a) * 1 = 1 * 0$ and hence $\MyInt.i a = 0$ so $a = 0$.
+    Let $a$ be such that $i(a)=0$. This means $⟦ (\MyInt.i a,1) ⟧ = ⟦ (0,1) ⟧$ so $(\MyInt.i a) * 1 = 1 * 0$ and hence $\MyInt.i a = 0$ so $a = 0$.
 \end{proof}
 
 \subsection{\texorpdfstring{The inclusion $j \colon \MyInt \to \MyRat$}{The inclusion}}
@@ -409,7 +409,7 @@ Similar to the proof of Lemma~\ref{MyRat.i_add}.
     We define a map
 \begin{gather*}
     j \colon \MyInt \to \MyRat \\
-    n \mapsto \llbracket (n,1) \rrbracket
+    n \mapsto ⟦ (n,1) ⟧
 \end{gather*}
 \end{definition}
 
@@ -495,7 +495,7 @@ It follows from unravelling all the definitions.
     \label{MyRat.Quotient.mk_def}
     \lean{MyRat.Quotient.mk_def}
     \leanok
-    Let $a$ and $b$ be in $\MyInt$ with $b \neq 0$. Then $\llbracket (a, b) \rrbracket = j(a)*j(b)^{-1}$.
+    Let $a$ and $b$ be in $\MyInt$ with $b \neq 0$. Then $⟦ (a, b) ⟧ = j(a)*j(b)^{-1}$.
 \end{lemma}
 \begin{proof}
     \uses{MyRat.inv, MyRat.mul, MyRat.j}
