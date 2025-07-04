@@ -359,7 +359,7 @@ instance field : Field MyRat where
 -/
 
 /-- The natural map from the naturals to the rationals. -/
-def i (n : ℕ) : MyRat := ⟦(n, ⟨1, by simp⟩)⟧
+def i (n : ℕ) : MyRat := ⟦(MyInt.i n, ⟨1, by simp⟩)⟧
 
 -- The natural map preserves 0
 lemma i_zero : i 0 = 0 := by
