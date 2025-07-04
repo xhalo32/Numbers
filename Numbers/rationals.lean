@@ -108,7 +108,7 @@ instance R_equiv : Setoid MyPrerat where
 -/
 
 /-- Negation on pre-rationals. -/
-def neg (ab : MyPrerat) : MyPrerat := (-ab.1, ab.2)
+def neg (x : MyPrerat) : MyPrerat := (-x.1, x.2)
 
 -- teach it to the simplifier
 @[simp] lemma neg_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) : neg (a, b) = (-a, b) := by
