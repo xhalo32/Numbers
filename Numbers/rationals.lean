@@ -412,9 +412,6 @@ lemma j_injective (a b : MyInt) : j a = j b ↔ a = b := by
 
 -- All the proofs were exactly the same as the natural number case.
 
--- Finally we check that the `i` and `j` commute with the natural
--- map `↑` from `ℕ` to `MyInt`:
-
 lemma j_comp_eq_i (n : ℕ) : j (MyInt.i n) = i n := by
   sorry
 
