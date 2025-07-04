@@ -512,7 +512,7 @@ Before defining the order on $\MyRat$, let's define the notion of nonnegativity.
     \lean{MyRat.IsNonneg}
     \uses{MyRat, MyRat.zero}
     \leanok
-Given $x = (a,b)$ in $\MyRat$, we say that $x$ is \emph{nonnegative} if $a \geq 0$ and $0 < 0$.
+Given $x = (a,b)$ in $\MyRat$, we say that $x$ is \emph{nonnegative} if $0 \leq a$ and $0 < b$.
 
 Can you see why it corresponds to the ``usual definition'' when we think that $x = a/b$?
 \end{definition}
