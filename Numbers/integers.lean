@@ -171,6 +171,9 @@ instance : Mul MyInt where mul := mul
 lemma mul_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) * ⟦(c, d)⟧ = ⟦(a * c + b * d, a * d + b * c)⟧ := by
   sorry
 
+lemma add_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) + ⟦(c, d)⟧ = ⟦(a + c, b + d)⟧ :=
+  rfl
+
 lemma add_assoc : ∀ (x y z : MyInt), (x + y) + z = x + (y + z) := by
   sorry
 
@@ -365,5 +368,8 @@ instance : IsOrderedAddMonoid MyInt where
 
 instance : IsStrictOrderedRing MyInt :=
   IsStrictOrderedRing.of_mul_pos mul_pos
+
+lemma archimedean (x : MyInt) : ∃ (n : ℕ), x ≤ i n := by
+  sorry
 
 end MyInt
