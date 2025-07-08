@@ -199,6 +199,9 @@ lemma mul_pos (a b : MyRat) (ha : 0 < a) (hb : 0 < b) : 0 < a * b := by
 noncomputable instance : IsStrictOrderedRing MyRat :=
   IsStrictOrderedRing.of_mul_pos mul_pos
 
+lemma archimedean (x : MyRat) : ∃ (n : ℕ), x ≤ i n := by
+  sorry
+
 end MyRat
 
 /-
