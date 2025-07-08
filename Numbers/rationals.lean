@@ -220,6 +220,10 @@ def add : MyRat → MyRat → MyRat := Quotient.map₂ MyPrerat.add add_quotient
 -- `+` notation
 instance : Add MyRat where add := add
 
+lemma add_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
+    (⟦(a, b)⟧ : MyRat) + ⟦(c, d)⟧ = ⟦(a * d + b * c, b * d)⟧ :=
+  sorry
+
 /-- Multiplication on integers. -/
 def mul : MyRat → MyRat → MyRat  := Quotient.map₂ MyPrerat.mul mul_quotient
 
