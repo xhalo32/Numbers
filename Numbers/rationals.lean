@@ -344,6 +344,10 @@ instance commRing : CommRing MyRat where
   nsmul := nsmulRec --ignore
   zsmul := zsmulRec --ignore
 
+lemma sub_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) (c : MyInt) (d : {x : MyInt // x ≠ 0}) :
+    (⟦(a, b)⟧ : MyRat) - ⟦(c, d)⟧ = ⟦(a * d - b * c, b * d)⟧ := by
+  sorry
+
 -- To make the rationals into a field we need to think a little more.
 
 lemma zero_ne_one : (0 : MyRat) ≠ 1 := by
