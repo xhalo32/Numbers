@@ -214,6 +214,10 @@ def neg : MyRat → MyRat := Quotient.map MyPrerat.neg neg_quotient
 -- unary `-` notation
 instance : Neg MyRat where neg := neg
 
+lemma neg_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
+    -(⟦(a, b)⟧ : MyRat) = ⟦(-a, b)⟧ := by
+  sorry
+
 /-- Addition on integers. -/
 def add : MyRat → MyRat → MyRat := Quotient.map₂ MyPrerat.add add_quotient
 
