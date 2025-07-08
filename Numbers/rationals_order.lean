@@ -177,6 +177,9 @@ and reflects `≤`. -/
 lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
   sorry
 
+lemma i_lt_iff (a b : ℕ) : i a < i b ↔ a < b := by
+  sorry
+
 /-!
 
 ## Linear order structure on the rationals

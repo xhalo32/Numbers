@@ -378,7 +378,7 @@ lemma i_mul (a b : ℕ) : i (a * b) = i a * i b := by
   sorry
 
 -- The natural map is injective
-lemma i_injective (a b : ℕ) : i a = i b ↔ a = b := by
+lemma i_injective : Function.Injective i := by
   sorry
 
 /-!
