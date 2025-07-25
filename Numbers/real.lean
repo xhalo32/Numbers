@@ -6,9 +6,58 @@ import Numbers.rationals_order
 abbrev IsCauchy (x : ℕ → MyRat) : Prop :=
   ∀ ε, 0 < ε → ∃ N, ∀ p q, N ≤ p → N ≤ q → |x p - x q| ≤ ε
 
+-- Thanks Kalle for this hint
+lemma exists_forall_abs_initial_le (x : ℕ → MyRat) (m : ℕ) : ∃ (M : MyRat), ∀ n < m, |x n| ≤ M := by
+  induction' m with m ih
+  · use 0
+    intro n hn
+    contradiction
+  · obtain ⟨M, hM⟩ := ih
+    use max M |x m|
+    intro n hn
+    by_cases h : n = m
+    · rw [h]
+      exact le_sup_right
+    · specialize hM n
+      have gona : n < m := by
+        suffices n ≤ m by
+          exact Nat.lt_of_le_of_ne this h
+        linarith
+      specialize hM gona
+      exact le_sup_of_le_left hM
+
 open Finset in
 lemma IsCauchy.bounded {x : ℕ → MyRat} (hx : IsCauchy x) : ∃ B, 0 < B ∧ ∀ n, |x n| ≤ B := by
-  sorry
+  unfold IsCauchy at hx
+  -- For arbitrary choice of ε we get an N for whict the tail is bounded.
+  -- Then we just nead the finite head to be bounded and for that we can use exists_forall_abs_initial_le.
+  -- The bound for the tail is chosen to be |x N| + 1, as we can "center" the tail around x N.
+
+  -- One could skolemize hx
+  -- choose f hx using hx
+  -- let N := f 1
+
+  specialize hx 1 (by linarith)
+  obtain ⟨N, hN⟩ := hx
+
+  obtain ⟨M, hM⟩ := exists_forall_abs_initial_le x N
+
+  refine ⟨max (|x N| + 1) M, ?_, ?_⟩
+  · apply lt_sup_of_lt_left
+    suffices 0 ≤ |x N| by
+      linarith
+    exact abs_nonneg (x N)
+  · intro n
+    by_cases hn : n < N
+    · exact le_sup_of_le_right (hM _ hn)
+    · specialize hN N n
+      simp_all
+      left
+      suffices |x n| - |x N| ≤ 1 by
+        linarith
+      apply le_trans (abs_sub_abs_le_abs_sub _ _)
+      rw [abs_sub_comm] at hN
+      exact hN
 
 abbrev MyPrereal := {x // IsCauchy x}
 
