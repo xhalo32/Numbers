@@ -555,16 +555,16 @@ macro "quot_proof" : tactic =>
 
 instance commRing : CommRing MyReal where
   add := (· + ·)
-  add_assoc := by
-    refine Quot.ind fun a => ?_
-    try refine Quot.ind fun b => ?_
-    try refine Quot.ind fun c => ?_
-    apply Quot.sound
-    intro ε hε
-    simp
-    use 0
-    intro n hn
-    try {ring_nf; simp [hε.le]}
+  add_assoc := by quot_proof
+    -- refine Quot.ind fun a => ?_
+    -- try refine Quot.ind fun b => ?_
+    -- try refine Quot.ind fun c => ?_
+    -- apply Quot.sound
+    -- intro ε hε
+    -- simp
+    -- use 0
+    -- intro n hn
+    -- try {ring_nf; simp [hε.le]}
   zero := 0
   zero_add := by quot_proof
   add_zero := by quot_proof
