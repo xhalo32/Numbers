@@ -3,19 +3,14 @@ name: Compile blueprint
 on:
   push:
     branches:
-      - main # Trigger on pushes to the default branch
+      - main
   workflow_dispatch:        # Allow manual triggering of the workflow from the GitHub Actions interface
-
-# Cancel previous runs if a new commit is pushed to the same PR or branch
-concurrency:
-  group: ${{ github.ref }}  # Group runs by the ref (branch or PR)
-  cancel-in-progress: true  # Cancel any ongoing runs in the same group
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read  # Read access to repository contents
-  pages: write    # Write access to GitHub Pages
-  id-token: write # Write access to ID tokens
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build_project:
@@ -34,24 +29,18 @@ jobs:
         run: ~/.elan/bin/lake exe cache get || true
 
       - name: Build project
-        run: ~/.elan/bin/lake build Numbers
+        run: ~/.elan/bin/lake build LHCP
 
-      - name: Cache API docs
+      - name: Cache build artifacts and API docs
         uses: actions/cache@v4
         with:
           path: |
-            .lake/build/doc/Aesop
-            .lake/build/doc/Batteries
-            .lake/build/doc/find
-            .lake/build/doc/Init
-            .lake/build/doc/Lake
-            .lake/build/doc/Lean
-            .lake/build/doc/Mathlib
-            .lake/build/doc/Std
-          key: Docs-${{ hashFiles('lake-manifest.json') }}
+            .lake/build
+          key:  LakeBuild-${{ runner.os }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}
+          restore-keys: LakeBuild-
 
       - name: Build project API documentation
-        run: ~/.elan/bin/lake -R -Kenv=dev build Numbers:docs
+        run: ~/.elan/bin/lake -R -Kenv=dev build LHCP:docs
 
       - name: Check for `home_page` folder # this is meant to detect a Jekyll-based website
         id: check_home_page
@@ -62,6 +51,7 @@ jobs:
           else
             echo "The 'home_page' folder does not exist in the repository."
             echo "HOME_PAGE_EXISTS=false" >> $GITHUB_ENV
+            mkdir -p home_page
           fi
 
       - name: Build blueprint and copy to `home_page/blueprint`
@@ -119,6 +109,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Make sure the API documentation cache works
-        run: mv home_page/docs .lake/build/doc
