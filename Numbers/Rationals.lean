@@ -1,5 +1,5 @@
-import Mathlib.Tactic
-import Numbers.integers
+-- import Mathlib.Tactic
+import Numbers.Integers
 
 /-!
 
@@ -642,6 +642,25 @@ theorem Quotient.mk_def (a : MyInt) (b : {x : MyInt // x ≠ 0}) :
 -- Now given a prerational, we never have to unfold it again,
 -- because we have got the theorem giving the formula for
 -- a general prerational, so we can just rewrite that instead.
+
+-- Simp-normal form removes explicit injections and turns them into casts
+
+@[simp] lemma i_eq_natCast (a : ℕ) : i a = a := by
+  induction a <;> simp_all [i_zero, i_one, i_add]
+
+@[simp] lemma j_eq_intCast (a : ℤ) : j a = a := by
+  induction a with simp_all [j_zero, j_one, j_add, j_neg, sub_eq_add_neg]
+
+lemma natCast_eq {n : ℕ} : (n : MyRat) = j (MyInt.i n) := by
+  rw [← i_eq_natCast]
+  simp [i, j]
+
+@[simp] lemma j_natCast_eq {n : ℕ} : j n = (n : MyRat) := by
+  rw [← i_eq_natCast]
+  simp [i, j]
+
+@[simp] lemma natCast_eq' {n : ℕ} : i n = n := by
+  induction n with simp_all
 
 end MyRat
 

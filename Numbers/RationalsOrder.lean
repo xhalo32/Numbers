@@ -1,4 +1,4 @@
-import Numbers.rationals
+import Numbers.Rationals
 
 /-!
 
@@ -456,18 +456,6 @@ lemma j_lt_iff (p q : MyInt) : j p < j q ↔ p < q := by
   apply not_congr
   exact j_injective p q
 
-/-- The natural map from the naturals to the rationals preserves
-and reflects `≤`. -/
-lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
-  simp [← j_comp_eq_i]
-  rw [← @Nat.cast_le MyInt]
-  apply j_le_iff
-
-lemma i_lt_iff (a b : ℕ) : i a < i b ↔ a < b := by
-  simp [← j_comp_eq_i]
-  rw [← @Nat.cast_lt MyInt]
-  apply j_lt_iff
-
 /-!
 
 ## Linear order structure on the rationals
@@ -495,6 +483,14 @@ lemma mul_pos (a b : MyRat) (ha : 0 < a) (hb : 0 < b) : 0 < a * b := by
 
 noncomputable instance : IsStrictOrderedRing MyRat :=
   IsStrictOrderedRing.of_mul_pos mul_pos
+
+/-- The natural map from the naturals to the rationals preserves
+and reflects `≤`. -/
+lemma i_le_iff (a b : ℕ) : i a ≤ i b ↔ a ≤ b := by
+  simp
+
+lemma i_lt_iff (a b : ℕ) : i a < i b ↔ a < b := by
+  simp
 
 lemma archimedean (x : MyRat) : ∃ (n : ℕ), x ≤ i n := by
   induction' x using Quotient.inductionOn with x
@@ -559,6 +555,12 @@ lemma archimedean (x : MyRat) : ∃ (n : ℕ), x ≤ i n := by
       · simp
         rw [x1h]
         ring
+
+instance : Archimedean MyRat := by
+  rw [archimedean_iff_nat_le]
+  simp_rw [natCast_eq]
+  intro x
+  exact archimedean x
 
 end MyRat
 

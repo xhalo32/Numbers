@@ -1,0 +1,1061 @@
+\chapter{The reals}
+
+We now define the real numbers as equivalence classes of Cauchy sequences (to be defined) of rationals.
+
+\section{Cauchy sequences of rationals}
+
+\begin{definition}
+    \label{IsCauchy}
+    \lean{IsCauchy}
+    \leanok
+    \uses{MyRat, MyRat.field}
+    A sequence $x : \mathbb{N} \to \MyRat$ is called \emph{Cauchy} if for all $\varepsilon > 0$ exists $N : \mathbb{N}$ such that for all $p, q \ge N$, $\left|x_p - x_q\right| < \varepsilon$.
+
+    Note: the absolute value defined in Mathlib is synthesized for the rationals since they are a field.
+\end{definition}
+
+\begin{lemma}
+    \label{exists_forall_abs_initial_le}
+    \lean{exists_forall_abs_initial_le}
+    \leanok
+    \uses{IsCauchy}
+    For any sequence $x : \mathbb{N} \to \MyRat$ and $m : \mathbb{N}$, there exists a bound $M : \MyRat$
+    such that $\forall n < m, \; |x_n| \leq M$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{IsCauchy.bounded}
+    \lean{IsCauchy.bounded}
+    \leanok
+    \uses{IsCauchy}
+    If $x$ is Cauchy, then there exists a bound $B > 0$, such that $|x_n| \leq B$ for all $n$.
+\end{lemma}
+\begin{proof}
+    \uses{exists_forall_abs_initial_le}
+    \leanok
+\end{proof}
+
+\section{The \emph{prereals}}
+
+\begin{definition}
+    \label{MyPrereal}
+    \lean{MyPrereal}
+    \leanok
+    \uses{IsCauchy}
+    We define the \emph{prereals} as the (sub)type of Cauchy sequences:
+    \[
+    \MyPrereal = \{ x : \mathbb{N} \to \MyRat \mid \IsCauchy(x) \}.
+    \]
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrereal.bounded}
+    \lean{MyPrereal.bounded}
+    \leanok
+    \uses{MyPrereal, IsCauchy}
+    Each prereal $x$ is bounded (as a sequence).
+\end{lemma}
+\begin{proof}
+    \uses{IsCauchy.bounded}
+    \leanok
+\end{proof}
+
+\subsection{Equivalence relation on prereals}
+
+\begin{definition}
+    \label{MyPrereal.R}
+    \lean{MyPrereal.R}
+    \leanok
+    \uses{MyPrereal}
+    Let $x,y$ be $\MyPrereal$s.
+    We say that $x \, R \, y$ if for all $\varepsilon > 0$, $x$ and $y$ are eventually $\varepsilon$-close.
+
+    Formally:
+
+    \[
+    x \, R \, y \iff \forall \varepsilon > 0, \; \exists N, \; \forall n \geq N, \; |x_n - y_n| \leq \varepsilon.
+    \]
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrereal.R_refl}
+    \lean{MyPrereal.R_refl}
+    \leanok
+    \uses{MyPrereal.R}
+    Relation $R$ is reflexive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.R_symm}
+    \lean{MyPrereal.R_symm}
+    \leanok
+    \uses{MyPrereal.R}
+    Relation $R$ is symmetric.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.R_trans}
+    \lean{MyPrereal.R_trans}
+    \leanok
+    \uses{MyPrereal.R}
+    Relation $R$ is transitive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.R_equiv}
+    \lean{MyPrereal.R_equiv}
+    \leanok
+We have that $R$ is an equivalence relation. From now on, we will write $x \approx y$ for
+$x R y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyPrereal.R_refl, MyPrereal.R_symm, MyPrereal.R_trans}
+\end{proof}
+
+\subsection{Constant prereals}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.const}
+    \lean{MyPrereal.IsCauchy.const}
+    \uses{MyPrereal}
+    \leanok
+    For any rational $x : \MyRat$, the constant sequence $n \mapsto x$ is Cauchy.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{definition}
+    \label{MyPrereal.zero}
+    \lean{MyPrereal.zero}
+    \uses{MyPrereal.IsCauchy.const}
+    \leanok
+    We define the zero of $\MyPrereal$, denoted $0$, as the constant sequence
+    \[
+    (0 : \MyPrereal) = (n \mapsto 0).
+    \]
+\end{definition}
+
+\begin{definition}
+    \label{MyPrereal.one}
+    \lean{MyPrereal.one}
+    \uses{MyPrereal.IsCauchy.const}
+    \leanok
+    We define the one of $\MyPrereal$, denoted $1$, as the constant sequence
+    \[
+    (1 : \MyPrereal) = (n \mapsto 1).
+    \]
+\end{definition}
+
+\subsection{Operations on prereals}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.neg}
+    \lean{MyPrereal.IsCauchy.neg}
+    \leanok
+    \uses{MyPrereal}
+    If $x$ is Cauchy, then $-x$ is also Cauchy.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{definition}
+    \label{MyPrereal.neg}
+    \lean{MyPrereal.neg}
+    \leanok
+    \uses{MyPrereal.IsCauchy.neg}
+    We define the negation of prereals by pointwise negation:
+    \[
+    (-x)_n = -x_n.
+    \]
+
+    Thanks to Lemma~\ref{MyPrereal.IsCauchy.neg} this is well defined.
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrereal.neg_quotient}
+    \lean{MyPrereal.neg_quotient}
+    \leanok
+    \uses{MyPrereal.neg}
+    If $x \approx x'$, then $-x \approx -x'$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.add}
+    \lean{MyPrereal.IsCauchy.add}
+    \leanok
+    \uses{MyPrereal}
+    Let $x,y$ be Cauchy sequences.
+    The pointwise sum $(x + y)_n := x_n + y_n$ is Cauchy.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+% Does not exist
+% \begin{definition}
+%     \label{MyPrereal.add}
+%     \lean{MyPrereal.add}
+%     \leanok
+%     \uses{MyPrereal.IsCauchy.add}
+%     We define the addition of prereals by pointwise addition:
+%     \[
+%     (x+y)_n = x_n + y_n.
+%     \]
+
+%     Thanks to Lemma~\ref{MyPrereal.IsCauchy.add} this is well defined.
+% \end{definition}
+
+\begin{lemma}
+    \label{MyPrereal.add_quotient}
+    \lean{MyPrereal.add_quotient}
+    \leanok
+    \uses{MyPrereal.R_equiv}
+    If $x \approx x'$ and $y \approx y'$, then $x+y \approx x'+y'$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.mul}
+    \lean{MyPrereal.IsCauchy.mul}
+    \leanok
+    \uses{IsCauchy}
+    Let $x,y$ be Cauchy sequences.
+    The pointwise product $(x \cdot y)_n := x_n \cdot y_n$ is Cauchy.
+\end{lemma}
+\begin{proof}
+    \uses{IsCauchy.bounded}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.mul_quotient}
+    \lean{MyPrereal.mul_quotient}
+    \leanok
+    \uses{MyPrereal.R_equiv}
+    If $x \approx x'$ and $y \approx y'$, then $x \cdot y \approx x' \cdot y'$.
+\end{lemma}
+\begin{proof}
+    \uses{IsCauchy.bounded}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.pos_of_not_equiv_zero}
+    \lean{MyPrereal.pos_of_not_equiv_zero}
+    \leanok
+    \uses{MyPrereal.R_equiv}
+    If $x \not\approx 0$, then there exists $\delta > 0$ such that $|x_n|$ is eventually $\delta$-far to $0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.inv}
+    \lean{MyPrereal.IsCauchy.inv}
+    \leanok
+    \uses{MyPrereal.R_equiv}
+    If $x \not\approx 0$, then $x^{-1}$ (defined pointwise) is Cauchy.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.pos_of_not_equiv_zero}
+    \leanok
+\end{proof}
+
+\begin{definition}
+    \label{MyPrereal.inv}
+    \lean{MyPrereal.inv}
+    \leanok
+    \uses{MyPrereal.IsCauchy.inv}
+    If $x$ is a prereal, we define its inverse as:
+    \[
+      (x^{-1})_n := \begin{cases}
+          0 & \text{if}\ x \approx 0 \\
+          (x_n)^{-1} & \text{otherwise}
+      \end{cases}
+    \]
+
+    Thanks to Lemma~\ref{MyPrereal.IsCauchy.inv} this is well defined.
+\end{definition}
+
+\begin{lemma}
+    \label{MyPrereal.inv_quotient}
+    \lean{MyPrereal.inv_quotient}
+    \leanok
+    \uses{MyPrereal.inv}
+    If $x \approx x'$, then $x^{-1} \approx x'^{-1}$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.pos_of_not_equiv_zero}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyPrereal.IsCauchy.sub}
+    \lean{MyPrereal.IsCauchy.sub}
+    \leanok
+    \uses{IsCauchy}
+    Let $x,y$ be Cauchy sequences.
+    $(x - y)_n := x_n - y_n$ is Cauchy.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+% Not actually defined, but inferred
+% \begin{definition}
+%     \label{MyPrereal.sub}
+%     \lean{MyPrereal.sub}
+%     \leanok
+%     \uses{MyPrereal.IsCauchy.add, MyPrereal.IsCauchy.neg}
+%     We define the subtraction of prereals as:
+%     \[
+%     (x-y) = x + (-y).
+%     \]
+
+%     Thanks to Lemma~\ref{MyPrereal.IsCauchy.add} and Lemma~\ref{MyPrereal.IsCauchy.neg} this is well defined.
+% \end{definition}
+
+\section{The reals}
+
+\begin{definition}
+    \label{MyReal}
+    \lean{MyReal}
+    \leanok
+    \uses{MyPrereal.R_equiv}
+    We define our reals as:
+    \[
+    \MyReal = \MyPrereal \, / \approx
+    \]
+    We will write $⟦ (a, b) ⟧$ for the class of $(a,b)$.
+\end{definition}
+
+
+\begin{definition}
+    \label{MyReal.zero}
+    \lean{MyReal.zero}
+    \uses{MyPrereal.R_equiv}
+    \leanok
+    We define the zero of $\MyReal$, denoted $0$ as $⟦ 0 ⟧$, i.e. the equivalence class of the prereal $0$.
+\end{definition}
+
+\begin{definition}
+    \label{MyReal.one}
+    \lean{MyReal.one}
+    \uses{MyPrereal.R_equiv}
+    \leanok
+    We define the one of $\MyReal$, denoted $1$ as $⟦ 1 ⟧$, i.e. the equivalence class of the prereal $1$.
+\end{definition}
+
+\subsection{Commutative ring structure}
+
+\begin{definition}
+    \label{MyReal.neg}
+    \lean{MyReal.neg}
+    \uses{MyPrereal.R_equiv, MyPrereal.neg_quotient}
+    \leanok
+We define the negation of $a = ⟦ x ⟧$ as
+\[
+-a = ⟦ -x ⟧
+\]
+Thanks to Lemma~\ref{MyPrereal.neg_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyReal.add}
+    \lean{MyReal.add}
+    \uses{MyPrereal.R_equiv, MyPrereal.add_quotient}
+    \leanok
+We define the addition of $a = ⟦ x ⟧$ and $b = ⟦ y ⟧$ as
+\[
+a + b = ⟦ x+y ⟧
+\]
+Thanks to Lemma~\ref{MyPrereal.add_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyReal.mul}
+    \lean{MyReal.mul}
+    \uses{MyPrereal.R_equiv, MyPrereal.mul_quotient}
+    \leanok
+We define the multiplication of $a = ⟦ x ⟧$ and $b = ⟦ y ⟧$ as
+\[
+a \cdot b = ⟦ x \cdot y ⟧
+\]
+Thanks to Lemma~\ref{MyPrereal.mul_quotient} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyReal.inv}
+    \lean{MyReal.inv}
+    \uses{MyPrereal.R_equiv, MyPrereal.inv_quotient}
+    \leanok
+We define the inverse of $a = ⟦ x ⟧$ as
+\[
+a^{-1} = ⟦ x^{-1} ⟧
+\]
+Thanks to Lemma~\ref{MyPrereal.inv_quotient} this is well defined.
+\end{definition}
+
+\begin{proposition}[Commutative ring]
+    \label{MyReal.commRing}
+    \lean{MyReal.commRing}
+    \leanok
+    $\MyReal$ with addition and multiplication is a commutative ring.
+\end{proposition}
+\begin{proof}
+    \uses{MyReal.add, MyReal.mul, MyReal.zero, MyReal.one}
+    \leanok
+    To show associativity of addition, i.e. $(⟦ a ⟧ + ⟦ b ⟧) + ⟦ c ⟧ = ⟦ a ⟧ + (⟦ b ⟧ + ⟦ c ⟧)$, we use the soundness axiom of quotients.
+    Now it suffices to show $(a + b) + c \approx a + (b + c)$.
+
+    Let $\varepsilon > 0$ and $n \geq 0 =: N$.
+    From ring structure on rationals and the assumption $\varepsilon > 0$ we get $|a_n + b_n + c_n - (a_n + (b_n + c_n))| \leq \varepsilon$.
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.zero_ne_one}
+    \lean{MyReal.zero_ne_one}
+    \leanok
+In $\MyReal$ we have $0 \neq 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyReal.zero, MyReal.one}
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.mul_inv_cancel}
+    \lean{MyReal.mul_inv_cancel}
+    \leanok
+Let $x \neq 0$ be in $\MyReal$. Then $x \cdot x^{-1} = 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{MyReal.inv, MyReal.mul, MyPrereal.pos_of_not_equiv_zero}
+\end{proof}
+
+\begin{proposition}[Field]
+    \label{MyReal.field}
+    \lean{MyReal.field}
+    \leanok
+    $\MyReal$ with addition and multiplication is a field.
+\end{proposition}
+\begin{proof}
+    \uses{MyReal.commRing, MyReal.zero_ne_one, MyReal.mul_inv_cancel}
+    \leanok
+\end{proof}
+
+\subsection{\texorpdfstring{The inclusion $k \colon \MyRat \to \MyReal$}{The inclusion}}
+\begin{definition}
+    \label{MyReal.k}
+    \lean{MyReal.k}
+    \uses{MyPrereal.IsCauchy.const}
+    \leanok
+    We define a map from rationals to constant sequences.
+    \begin{gather*}
+        k \colon \MyRat \to \MyReal \\
+        k(x) := ⟦ x ⟧
+    \end{gather*}
+
+    The constant sequence is Cauchy thanks to Lemma~\ref{MyPrereal.IsCauchy.const}.
+\end{definition}
+
+\begin{lemma}
+    \label{MyReal.k_zero}
+    \lean{MyReal.k_zero}
+    \leanok
+    \uses{MyReal.k}
+We have that $k(0) = 0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_one}
+    \lean{MyReal.k_one}
+    \leanok
+    \uses{MyReal.k}
+We have that $k(1) = 1$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_neg}
+    \lean{MyReal.k_neg}
+    \leanok
+    \uses{MyReal.k}
+For all $a$ in $\MyRat$ we have that
+\[
+k(-a) = -k(a)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.neg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_add}
+    \lean{MyReal.k_add}
+    \leanok
+    \uses{MyReal.k}
+For all $a$ and $b$ in $\MyRat$ we have that
+\[
+k(a+b) = k(a) + k(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.add}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_mul}
+    \lean{MyReal.k_mul}
+    \leanok
+    \uses{MyReal.k}
+For all $a$ and $b$ in $\MyRat$ we have that
+\[
+k(a \cdot b) = k(a) \cdot k(b)
+\]
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.mul}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_injective}
+    \lean{MyReal.k_injective}
+    \leanok
+    \uses{MyReal.k}
+    We have that $k$ is injective.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \label{MyReal.k_inv}
+    \lean{MyReal.k_inv}
+    \leanok
+    \uses{MyReal.k}
+    For all $a$ in $\MyRat$ we have that
+    \[
+    k(a^{-1}) = k(a)^{-1}
+    \]
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.k_injective}
+    \leanok
+\end{proof}
+
+\subsection{Positivity of prereals}
+
+\newcommand{\labell}[1]{
+    \label{#1}
+    \lean{#1}
+}
+
+\begin{definition}
+    \labell{MyPrereal.IsPos}
+    \uses{MyPrereal}
+    \leanok
+    Given a prereal $x$, we say that $x$ is \emph{positive} if there exists a positive $\delta$ such that $x_n \geq \delta$ holds eventually (for large enough $n$).
+\end{definition}
+
+\begin{lemma}
+    \labell{MyPrereal.one_pos}
+    \uses{MyPrereal.IsPos, MyPrereal.one}
+    \leanok
+    We have that the prereal $1$ is positive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.not_isPos_zero}
+    \uses{MyPrereal.IsPos, MyPrereal.zero, MyPrereal.R_equiv}
+    \leanok
+    We have for any prereal $x \approx 0$ that $x$ is not positive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.not_equiv_zero_of_isPos}
+    \uses{MyPrereal.IsPos, MyPrereal.zero, MyPrereal.R_equiv}
+    \leanok
+    If $x$ is a positive prereal, then $x \not\approx 0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.isPos_quotient}
+    \uses{MyPrereal.IsPos, MyPrereal.R_equiv}
+    \leanok
+    Let $x,x'$ be prereals such that $x \approx x'$ and assume that $x$ is positive.
+    Then $x'$ is positive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.IsPos.add}
+    \uses{MyPrereal.IsPos}
+    \leanok
+    Let $x,y$ be positive prereals.
+    Then $x + y$ is positive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.IsPos.mul}
+    \uses{MyPrereal.IsPos}
+    \leanok
+    Let $x,y$ be positive prereals.
+    Then $x \cdot y$ is positive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\section{Nonnegativity of prereals}
+
+\begin{definition}
+    \labell{MyPrereal.IsNonneg}
+    \uses{MyPrereal.IsPos, MyPrereal.R_equiv}
+    \leanok
+    Given a prereal $x$, we say that $x$ is \emph{nonnegative} if $x$ is positive or $x \approx 0$.
+\end{definition}
+
+\begin{lemma}
+    \labell{MyPrereal.IsNonneg_of_equiv_zero}
+    \uses{MyPrereal.IsNonneg}
+    \leanok
+    Let $x$ be a prereal.
+    If $x \approx 0$ then $x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.IsNonneg_of_nonneg}
+    \uses{MyPrereal.IsNonneg}
+    \leanok
+    Let $x$ be a prereal.
+    If $x_n$ is eventually nonnegative for large enough $n$, then $x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.pos_of_not_equiv_zero}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.zero_nonneg}
+    \uses{MyPrereal.IsNonneg, MyPrereal.zero}
+    \leanok
+    We have that $0$ in $\MyPrereal$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.IsNonneg_of_nonneg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.one_nonneg}
+    \uses{MyPrereal.IsNonneg, MyPrereal.one}
+    \leanok
+    We have that $1$ in $\MyPrereal$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.IsNonneg_of_nonneg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.isNonneg_quotient}
+    \uses{MyPrereal.IsNonneg, MyPrereal.R_equiv}
+    \leanok
+    Let $x,x'$ be prereals.
+    If $x \approx x'$ and $x$ is nonnegative, then $x'$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    % TODO
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.eq_zero_of_isNonneg_of_isNonneg_neg}
+    \uses{MyPrereal.IsNonneg, MyPrereal.neg, MyPrereal.R_equiv}
+    \leanok
+    Let $x$ be a prereal.
+    If $x$ is nonnegative and $-x$ is nonnegative, then $x \approx 0$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.isNonneg_neg_of_not_isNonneg}
+    \uses{MyPrereal.IsNonneg, MyPrereal.neg}
+    \leanok
+    Let $x$ be a prereal.
+    If $x$ is not nonnegative then $-x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    % TODO
+\end{proof}
+
+\section{Nonnegativity of reals}
+
+\begin{definition}
+    \labell{MyReal.IsNonneg}
+    \uses{MyPrereal.isNonneg_quotient, MyPrereal.IsNonneg}
+    \leanok
+    We define nonnegativity on reals by lifting nonnegativity of prereals to the quotient.
+
+    Thanks to Lemma~\ref{MyPrereal.isNonneg_quotient} this is well defined.
+\end{definition}
+
+\begin{lemma}
+    \labell{MyReal.zero_nonneg}
+    \lean{MyReal.zero_nonneg}
+    \uses{MyReal.IsNonneg, MyReal.zero}
+    \leanok
+    We have that $0$ in $\MyReal$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.zero_nonneg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.eq_zero_of_isNonneg_of_isNonneg_neg}
+    \uses{MyReal.IsNonneg, MyReal.neg}
+    \leanok
+    Let $x$ be a real.
+    If $x$ and $-x$ are nonnegative, then $x = 0$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.eq_zero_of_isNonneg_of_isNonneg_neg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.IsNonneg.add}
+    \uses{MyReal.IsNonneg, MyReal.add}
+    \leanok
+    Let $x$ and $y$ be in $\MyReal$ both nonnegative. Then $x+y$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.IsNonneg.mul}
+    \uses{MyReal.IsNonneg, MyReal.mul}
+    \leanok
+    Let $x$ and $y$ be in $\MyReal$ both nonnegative. Then $x \cdot y$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+% \begin{lemma}
+%     \labell{MyReal.IsNonneg.inv}
+%     \uses{MyReal.IsNonneg, MyReal.inv}
+%     \leanok
+%     Let $x$ be in $\MyReal$ be nonnegative. Then $x^{-1}$ is nonnegative.
+% \end{lemma}
+% \begin{proof}
+%     \leanok
+%     Exercice.
+% \end{proof}
+
+\subsection{The order on reals}
+
+\begin{definition}
+    \labell{MyReal.le}
+    \uses{MyReal.IsNonneg}
+    \leanok
+    We define the relation $\leq$ on reals as follows.
+
+    Let $x,y$ be reals, $x \leq y$ if $y - x$ is nonnegative.
+\end{definition}
+
+\begin{lemma}
+    \labell{MyReal.zero_le_iff_isNonneg}
+    \uses{MyReal.le, MyReal.zero}
+    \leanok
+    Let $x$ be a reals.
+
+    $0 \leq y$ iff $x$ is nonnegative.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.zero_le_one}
+    \uses{MyReal.le, MyReal.zero, MyReal.one}
+    \leanok
+    $0 \leq 1$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.one_nonneg}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.le_refl}
+    \uses{MyReal.le}
+    \leanok
+    The relation $\leq$ on $\MyReal$ is reflexive.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.le_trans}
+    \uses{MyReal.le}
+    \leanok
+    The relation $\leq$ on $\MyReal$ is transitive.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.IsNonneg.add}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.le_antisymm}
+    \uses{MyReal.le}
+    \leanok
+    The relation $\leq$ on $\MyReal$ is antisymmetric.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.eq_zero_of_isNonneg_of_isNonneg_neg}
+    \leanok
+\end{proof}
+
+\begin{proposition}[Partial order]
+    \labell{MyReal.partialOrder}
+    \uses{MyReal.le}
+    \leanok
+    $\leq$ is a partial order on $\MyReal$.
+
+    This induces a strict ordering relation $<$ defined as:
+    \[
+        a < b \iff a \leq b ∧ b \not\leq a
+    \]
+\end{proposition}
+\begin{proof}
+    \uses{MyReal.le_refl, MyReal.le_trans, MyReal.le_antisymm}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.pos_def}
+    \uses{MyReal.partialOrder}
+    \leanok
+    Let $x$ be a prereal.
+    $x$ is positive iff $0 < ⟦ x ⟧$, where $⟦ x ⟧ : \MyReal$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.not_equiv_zero_of_isPos}
+    \leanok
+\end{proof}
+
+\subsection{Interaction between the order and the ring structure}
+
+\begin{lemma}
+    \labell{MyReal.add_le_add_left}
+    \uses{MyReal.le, MyReal.add}
+    \leanok
+    Let $x,y,t$ be reals.
+    If $x \leq y$, then $t + x \leq t + y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.mul_nonneg}
+    \uses{MyReal.le, MyReal.mul}
+    \leanok
+    Let $x,y$ be reals.
+    If $0 \leq x$ and $0 \leq y$, then $0 \leq x \cdot y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.IsNonneg.mul}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.isPos_const_iff}
+    \uses{MyReal.le}
+    \leanok
+    Let $x,y$ be reals.
+    If $0 \leq x$ and $0 \leq y$, then $0 \leq x \cdot y$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyPrereal.equiv_const}
+    \uses{MyPrereal.R_equiv, MyPrereal.IsCauchy.const}
+    \leanok
+    Let $a,b$ be rationals.
+    $a = b$ iff the constant sequences are related as prereals, i.e. $n \mapsto a \approx n \mapsto b$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\subsection{Interaction between the order and the inclusions}
+
+\begin{lemma}
+    \labell{MyReal.k_le_iff}
+    \uses{MyReal.k, MyReal.partialOrder}
+    \leanok
+    Let $x,y$ be rationals.
+    $k(x) \leq k(y)$ iff $x \leq y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.isPos_const_iff}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.k_lt_iff}
+    \uses{MyReal.k, MyReal.partialOrder}
+    \leanok
+    Let $x,y$ be rationals.
+    $k(x) < k(y)$ iff $x < y$.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.k_injective, MyReal.k_le_iff}
+    \leanok
+\end{proof}
+
+\subsection{The linear order structure}
+
+\begin{lemma}
+    \labell{MyReal.le_total}
+    \uses{MyReal.partialOrder}
+    \leanok
+    The relation $\leq$ on reals is total.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.isNonneg_neg_of_not_isNonneg}
+    \leanok
+\end{proof}
+
+\begin{proposition}[Linear order]
+    \labell{MyReal.linearOrder}
+    \leanok
+    $\MyReal$ with $\leq$ is a linear order.
+\end{proposition}
+\begin{proof}
+    \uses{MyReal.le_total}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.mul_pos}
+    \uses{MyReal.partialOrder}
+    \leanok
+    Let $a,b$ be reals.
+    If $0 < a$ and $0 < b$, $0 < a \cdot b$.
+\end{lemma}
+\begin{proof}
+    \uses{MyPrereal.IsPos.mul}
+    \leanok
+\end{proof}
+
+\begin{proposition}[Strict order]
+    \labell{MyReal.strictOrderedRing}
+    \leanok
+    We have that $\MyReal$ is a \emph{strict ordered ring}: a nontrivial ring with a partial order such that addition is strictly monotone and multiplication by a positive number is strictly monotone.
+\begin{proof}
+    \uses{MyReal.mul_pos}
+    \leanok
+\end{proof}
+
+\section{Completeness of reals}
+
+\begin{lemma}
+    \labell{MyReal.myRat_dense_rat'}
+    \uses{MyReal.k, MyReal.partialOrder}
+    \leanok
+    Let $x$ be a real and $\varepsilon$ be a positive rational.
+    There exists a rational $r$, such that $|x - k(r)| < k(\varepsilon)$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.myRat_dense_of_pos}
+    \uses{MyReal.k, MyReal.partialOrder}
+    \leanok
+    Let $x$ be a positive real.
+    There exists a positive rational $r$, such that $k(r) < x$.
+\end{lemma}
+\begin{proof}
+    \leanok
+\end{proof}
+
+\begin{lemma}
+    \labell{MyReal.myRat_dense_rat}
+    \uses{MyReal.k, MyReal.partialOrder}
+    \leanok
+    Let $x$ be a real and $\varepsilon$ be a positive real.
+    There exists a rational $r$, such that $|x - k(r)| < \varepsilon$.
+\end{lemma}
+\begin{proof}
+    \uses{MyReal.myRat_dense_of_pos, MyReal.myRat_dense_rat'}
+    \leanok
+\end{proof}
+
+\subsection{Limits of real sequences}
+
+\begin{definition}
+    \labell{MyReal.TendsTo}
+    \uses{MyReal.partialOrder}
+    \leanok
+
+\end{definition}

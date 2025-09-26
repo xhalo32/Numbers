@@ -1,4 +1,8 @@
-import Mathlib.Tactic
+import Mathlib.Tactic.Have
+import Mathlib.Tactic.ApplyAt
+
+import Mathlib.Analysis.Normed.Ring.Lemmas
+import Mathlib.Algebra.Order.Star.Basic
 
 /-!
 
@@ -50,28 +54,30 @@ namespace MyPreint
 
 /-- The equivalence relation on pre-integers, which we'll quotient out
 by to get integers. -/
+
 def R (x y : MyPreint) : Prop := x.1 + y.2 = x.2 + y.1
 
-/-- Useful lemma that is mathematically trivial. -/
-lemma R_def (a b c d : ℕ) : R (a,b) (c,d) ↔ a + d = b + c := by
+lemma R_def (x y: MyPreint) : R x y ↔ x.1 + y.2 = x.2 + y.1 := by
+  rfl
+
+lemma R_def' (a b c d : ℕ) : R (a,b) (c,d) ↔ a + d = b + c := by
   rfl
 
 lemma R_refl : ∀ x, R x x := by
   intro x
-  unfold R
-  rw [add_comm]
+  rw [R_def, add_comm]
 
 lemma R_symm : ∀ {x y}, R x y → R y x := by
   intro x y h
-  unfold R at *
+  rw [R_def] at *
   rw [add_comm, ←h, add_comm]
 
 lemma R_trans : ∀ {x y z}, R x y → R y z → R x z := by
   intro x y z hx hz
-  unfold R at *
+  rw [R_def] at *
   suffices x.1 + y.2 + y.1 + z.2 = x.2 + y.1 + y.2 + z.1 by
-    linarith
-  linarith
+    omega
+  omega
 
 /-- Enable `≈` notation for `R` and ability to quotient by it -/
 -- you can ignore this
@@ -80,12 +86,10 @@ instance R_equiv : Setoid MyPreint where
   iseqv := ⟨R_refl, R_symm, R_trans⟩
 
 -- Teach the definition of `≈` to the simplifier, so `simp` becomes more powerful
-@[simp] lemma equiv_def (a b c d : ℕ) : (a, b) ≈ (c, d) ↔ a + d = b + c := by
-  rfl
+@[simp] lemma equiv_def (a b c d : ℕ) : (a, b) ≈ (c, d) ↔ a + d = b + c := by rfl
 
 -- Teach the definition of `Setoid.r` to the simplifier, so `simp` becomes more powerful
-@[simp] lemma equiv_def' (a b c d : ℕ) : Setoid.r (a, b) (c, d) ↔ a + d = b + c := by
-  rfl
+@[simp] lemma equiv_def' (a b c d : ℕ) : Setoid.r (a, b) (c, d) ↔ a + d = b + c := by rfl
 
 -- Variant with MyPreints not destructured to nats
 @[simp] lemma equiv_def'' (a b : MyPreint) : Setoid.r a b ↔ a.1 + b.2 = a.2 + b.1 := by
@@ -101,31 +105,32 @@ instance R_equiv : Setoid MyPreint where
 def neg (x : MyPreint) : MyPreint := (x.2, x.1)
 
 -- teach it to the simplifier
-@[simp] lemma neg_def (a b : ℕ) : neg (a, b) = (b, a) := by
-  rfl
+@[simp] lemma neg_def (x : MyPreint) : neg x = (x.2, x.1) := rfl
 
-lemma neg_quotient ⦃x x' : MyPreint⦄ (h : x ≈ x') : neg x ≈ neg x' := by
-  unfold neg
-  -- cases' x with x1 x2
-  -- cases' x' with x'1 x'2
-  simp
-  rw [← h]
+@[simp] lemma neg_def' (a b : ℕ) : neg (a, b) = (b, a) := rfl
+
+lemma neg_quotient {x x' : MyPreint} (h : x ≈ x') : neg x ≈ neg x' := by
+  simp -- uses [neg_def, equiv_def]
+  exact h.symm -- h states that x.1 + x'.2 = x.2 + x'.1
 
 /-- Addition on pre-integers. -/
-@[simp] def add (x y : MyPreint) : MyPreint := (x.1 + y.1, x.2 + y.2)
+def add (x y : MyPreint) : MyPreint := (x.1 + y.1, x.2 + y.2)
 
 -- teach it to the simplifier
-@[simp] lemma add_def (a b c d : ℕ) : add (a, b) (c, d) = (a + c, b + d) := by
+@[simp] lemma add_def (x y : MyPreint) : add x y = (x.1 + y.1, x.2 + y.2) := by
   rfl
 
-lemma add_quotient ⦃x x' : MyPreint⦄ (h : x ≈ x') ⦃y y' : MyPreint⦄ (h' : y ≈ y') :
+@[simp] lemma add_def' (a b c d : ℕ) : add (a, b) (c, d) = (a + c, b + d) := by
+  rfl
+
+lemma add_quotient {x x' : MyPreint} (h : x ≈ x') {y y' : MyPreint} (h' : y ≈ y') :
     add x y ≈ add x' y' := by
   simp
   suffices y.1 + (x.1 + x'.2) + y'.2 = y.2 + (x.2 + x'.1) + y'.1 by
-    linarith
+    omega
   rw [h]
   suffices y.1 + y'.2 = y.2 + y'.1 by
-    linarith
+    omega
   rw [h']
 
 /-- Multiplication on pre-integers. -/
@@ -141,7 +146,7 @@ lemma mul_comm (x y : MyPreint) :
   simp
   constructor <;> ring
 
-lemma mul_quotient' ⦃x x' : MyPreint⦄ (h : x ≈ x') ⦃y : MyPreint⦄ :
+lemma mul_quotient' {x x' : MyPreint} (h : x ≈ x') {y : MyPreint} :
     mul x y ≈ mul x' y := by
   simp
   suffices (x.1 + x'.2) * y.1 + (x.2 + x'.1) * y.2 = (x.1 + x'.2) * y.2 + (x.2 + x'.1) * y.1 by
@@ -149,7 +154,7 @@ lemma mul_quotient' ⦃x x' : MyPreint⦄ (h : x ≈ x') ⦃y : MyPreint⦄ :
   rw [h]
   ring
 
-lemma mul_quotient ⦃x x' : MyPreint⦄ (h : x ≈ x') ⦃y y' : MyPreint⦄ (h' : y ≈ y') :
+lemma mul_quotient {x x' : MyPreint} (h : x ≈ x') {y y' : MyPreint} (h' : y ≈ y') :
     mul x y ≈ mul x' y' := by
   trans x'.mul y
   apply mul_quotient'
@@ -224,31 +229,39 @@ instance one : One MyInt where one := ⟦(1, 0)⟧
 lemma one_def : (1 : MyInt) = ⟦(1, 0)⟧ := by
   rfl
 
+#check Quot.map
+#check Quotient.map
+
 /-- Negation on integers. -/
-def neg : MyInt → MyInt := Quotient.map MyPreint.neg neg_quotient
+def neg : MyInt → MyInt := Quotient.map MyPreint.neg @neg_quotient
 
 -- unary `-` notation
 instance : Neg MyInt where neg := neg
 
 /-- Addition on integers. -/
-def add : MyInt → MyInt → MyInt  := Quotient.map₂ MyPreint.add add_quotient
+def add : MyInt → MyInt → MyInt := Quotient.map₂ MyPreint.add @add_quotient
 
 -- `+` notation
 instance : Add MyInt where add := add
 
 /-- Multiplication on integers. -/
-def mul : MyInt → MyInt → MyInt  := Quotient.map₂ MyPreint.mul mul_quotient
+def mul : MyInt → MyInt → MyInt := Quotient.map₂ MyPreint.mul @mul_quotient
 
 -- `*` notation
 instance : Mul MyInt where mul := mul
 
-lemma mul_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) * ⟦(c, d)⟧ = ⟦(a * c + b * d, a * d + b * c)⟧ := by
+@[simp] lemma neg_def (a b : ℕ) : -(⟦(a, b)⟧ : MyInt) = ⟦(b, a)⟧ :=
+  rfl
+
+@[simp] lemma add_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) + ⟦(c, d)⟧ = ⟦(a + c, b + d)⟧ :=
+  rfl
+
+@[simp] lemma mul_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) * ⟦(c, d)⟧ = ⟦(a * c + b * d, a * d + b * c)⟧ := by
   apply Quot.sound
-  simp only [MyPreint.mul]
+  -- simp only [MyPreint.mul]
   exact R_equiv.refl _
 
-lemma add_def (a b c d : ℕ) : (⟦(a, b)⟧ : MyInt) + ⟦(c, d)⟧ = ⟦(a + c, b + d)⟧ :=
-  rfl
+#check Quotient.eq
 
 lemma add_assoc : ∀ (x y z : MyInt), (x + y) + z = x + (y + z) := by
   apply Quotient.ind
@@ -258,8 +271,7 @@ lemma add_assoc : ∀ (x y z : MyInt), (x + y) + z = x + (y + z) := by
   apply Quotient.ind
   intro ⟨e, f⟩
 
-  simp [add_def]
-  linarith
+  simp +arith -- uses [add_def, Quotient.eq, equiv_def'] + basic ℕ arithmetic
 
 --The same will happen for almost everything else we want to prove!
 
@@ -277,43 +289,16 @@ which does all three cases.
 
 -/
 
-macro "quot_proof₁" : tactic =>
-  `(tactic|
-  focus
-    intro x
-    refine Quot.induction_on x ?_
-    rintro ⟨a, b⟩
-    apply Quot.sound
-    simp [Setoid.r, R]
-    try ring)
-
-macro "quot_proof₂" : tactic =>
-  `(tactic|
-  focus
-    intro x y
-    refine Quot.induction_on₂ x y ?_
-    rintro ⟨a, b⟩ ⟨c, d⟩
-    apply Quot.sound
-    simp [Setoid.r, R]
-    try ring)
-
-macro "quot_proof₃" : tactic =>
-  `(tactic|
-  focus
-    intro x y z
-    refine Quot.induction_on₃ x y z ?_
-    rintro ⟨a, b⟩ ⟨c, d⟩ ⟨e, f⟩
-    apply Quot.sound
-    simp [Setoid.r, R]
-    try ring)
-
 /-- Tactic for proving equality goals in rings defined as quotients. -/
 macro "quot_proof" : tactic =>
   `(tactic|
   focus
-    try quot_proof₁
-    try quot_proof₂
-    try quot_proof₃)
+    refine Quot.ind fun ⟨a, b⟩ => ?_
+    try refine Quot.ind fun ⟨c, d⟩ => ?_
+    try refine Quot.ind fun ⟨e, f⟩ => ?_
+    simp +arith [zero_def, one_def]
+    try ring -- simp already solves most of the cases, but if not, we use the more powerful `ring`
+  )
 
 instance commRing : CommRing MyInt where
   add := (· + ·)
@@ -334,8 +319,8 @@ instance commRing : CommRing MyInt where
   neg := (- ·)
   mul_comm := by quot_proof
   neg_add_cancel := by quot_proof
-  nsmul := nsmulRec --ignore this
-  zsmul := zsmulRec --ignore this
+  nsmul := nsmulRec -- ignore this
+  zsmul := zsmulRec -- ignore this
 
 lemma zero_ne_one : (0 : MyInt) ≠ 1 := by
   intro f
@@ -372,7 +357,7 @@ lemma eq_of_mul_eq_mul_right {x y z : MyInt} (hx : x ≠ 0) (h : y * x = z * x) 
   refine Quot.induction_on₃ x y z ?_
   intro ⟨a, b⟩ ⟨c, d⟩ ⟨e, f⟩ h hMul
   simp at *
-  simp [mul_def] at hMul
+  -- simp [mul_def] at hMul
   simp [zero_def] at h
   suffices  a * (c + f) + b * (d + e) = a * (d + e) + b * (c + f) by
     apply aux_mul_lemma at this
@@ -465,8 +450,6 @@ lemma le_total (x y : MyInt) : x ≤ y ∨ y ≤ x := by
     intro ⟨a, b⟩ ⟨c, d⟩ ha hc
     unfold i at *
     simp_all
-    simp_rw [add_def, add_zero] at *
-    simp [Quotient.eq] at *
     convert_to ∀ z, a + d ≠ (c + b) + z at ha; ring_nf
     convert_to ∀ z, c + b ≠ (a + d) + z at hc; ring_nf
     by_cases hle : a + d ≤ c + b
@@ -539,7 +522,6 @@ lemma mul_pos (x y : MyInt) (hx : 0 < x) (hy : 0 < y) : 0 < x * y := by
   rintro ⟨a, b⟩ ⟨c, d⟩
   simp
   intro hx hy
-  rw [mul_def]
   change 0 ≤ _ ∧ ¬ _ ≤ 0
   obtain ⟨hx1, hx2⟩ := hx
   obtain ⟨hy1, hy2⟩ := hy
@@ -654,60 +636,10 @@ lemma archimedean (x : MyInt) : ∃ (n : ℕ), x ≤ i n := by
     apply le_of_lt at h
     simp_all
 
--- Extra useful instances and stuff
-
--- This is false if b = 0
--- instance : IsRightCancelMul MyInt where
---   mul_right_cancel := by
---     intro a b c h
---     induction' a using Quotient.inductionOn with a
---     induction' b using Quotient.inductionOn with b
---     induction' c using Quotient.inductionOn with c
---     rw [mul_def, mul_def] at h
---     have h2 := h
---     simp at h
---     simp
---     ring_nf at h
---     have h : b.1 * (a.1 + c.2) + b.2 * (a.2 + c.1)
---            = b.1 * (a.2 + c.1) + b.2 * (a.1 + c.2)
---     · linarith
-
---     -- we want to eliminate the terms a1 b1, a2 b2, a1 b2, a2 b1
---     -- have : ⟦(a.1 * b.1 + a.2 * b.2,                         a.1 * b.2 + a.2 * b.1)⟧
---     --      = ⟦(a.1 * b.1 + a.2 * b.2 + b.1 * c.2 + b.2 * c.1, a.1 * b.2 + a.2 * b.1 + b.1 * c.2 + b.2 * c.1)⟧
---     -- · simp
---     --   ring
---     -- rw [this] at h2
-
---     have : ⟦(c.1 * b.1 + c.2 * b.2,                         c.1 * b.2 + c.2 * b.1)⟧
---          = ⟦(c.1 * b.1 + c.2 * b.2 + b.1 * c.2 + b.2 * c.1, c.1 * b.2 + c.2 * b.1 + b.1 * c.2 + b.2 * c.1)⟧
---     · simp
---       ring
---     rw [this] at h2
-
-
-
---     simp at h2
---     ring_nf at h2
-
---     suffices (a.1 + c.2) * (b.1 + b.2)
---            = (a.2 + c.1) * (b.1 + b.2) by
---       rw [Nat.mul_right_cancel_iff] at this
---       exact this
-
-
-    -- have h2 : a.1 * (b.1 + c.2) + a.2 * (b.2 + c.1) + b.1 * c.2 + b.2 * c.1
-            -- = a.1 * (b.2 + c.2) + a.2 * (b.1 + c.1) + b.1 * c.1 + b.2 * c.2
-    -- · linarith
-
-
-    -- add b1 * (a1 + c1)
-    -- suffices b.1 * (a.1 + c.2) = b.1 * (a.2 + c.1)
-
 -- Extra useful lemmas
 
-#synth AddMonoidWithOne MyInt
-#check commRing.toAddGroupWithOne.toNatCast
+-- #synth AddMonoidWithOne MyInt
+-- #check commRing.toAddGroupWithOne.toNatCast
 
 @[simp] lemma i_eq_natCast (a : ℕ) : MyInt.i a = ↑a := by
   induction a <;> simp_all

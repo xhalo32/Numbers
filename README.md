@@ -1,3 +1,5 @@
 # A journey to the world of Numbers
 
-See the [website](https://riccardobrasca.github.io/).
+This work is built on top of [Riccardo Brasca's template project](https://github.com/riccardobrasca/Numbers/).
+
+See the [blueprint](https://xhalo32.github.io/Numbers).
