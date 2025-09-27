@@ -114,8 +114,11 @@ MyPrereal.IsCauchy.neg
 MyPrereal.neg
 MyPrereal.neg_quotient
 MyPrereal.IsCauchy.add
+MyPrereal.add
+MyPrereal.sub
 MyPrereal.add_quotient
 MyPrereal.IsCauchy.mul
+MyPrereal.mul
 MyPrereal.mul_quotient
 MyPrereal.pos_of_not_equiv_zero
 MyPrereal.IsCauchy.inv

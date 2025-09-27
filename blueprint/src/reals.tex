@@ -209,19 +209,29 @@ $x R y$.
     \leanok
 \end{proof}
 
-% Does not exist
-% \begin{definition}
-%     \label{MyPrereal.add}
-%     \lean{MyPrereal.add}
-%     \leanok
-%     \uses{MyPrereal.IsCauchy.add}
-%     We define the addition of prereals by pointwise addition:
-%     \[
-%     (x+y)_n = x_n + y_n.
-%     \]
+\begin{definition}
+    \label{MyPrereal.add}
+    \lean{MyPrereal.add}
+    \leanok
+    \uses{MyPrereal.IsCauchy.add}
+    We define the addition of prereals by pointwise addition:
+    \[
+    (x+y)_n = x_n + y_n.
+    \]
 
-%     Thanks to Lemma~\ref{MyPrereal.IsCauchy.add} this is well defined.
-% \end{definition}
+    Thanks to Lemma~\ref{MyPrereal.IsCauchy.add} this is well defined.
+\end{definition}
+
+\begin{definition}
+    \label{MyPrereal.sub}
+    \lean{MyPrereal.sub}
+    \leanok
+    \uses{MyPrereal.add, MyPrereal.neg}
+    We define the negation of prereals as follows:
+    \[
+    (x-y) = x + (-y).
+    \]
+\end{definition}
 
 \begin{lemma}
     \label{MyPrereal.add_quotient}
@@ -246,6 +256,19 @@ $x R y$.
     \uses{IsCauchy.bounded}
     \leanok
 \end{proof}
+
+\begin{definition}
+    \label{MyPrereal.mul}
+    \lean{MyPrereal.mul}
+    \leanok
+    \uses{MyPrereal.IsCauchy.mul}
+    We define the multiplication of prereals by pointwise multiplication:
+    \[
+    (x \cdot y)_n = x_n \cdot y_n.
+    \]
+
+    Thanks to Lemma~\ref{MyPrereal.IsCauchy.mul} this is well defined.
+\end{definition}
 
 \begin{lemma}
     \label{MyPrereal.mul_quotient}
@@ -354,7 +377,7 @@ $x R y$.
 \begin{definition}
     \label{MyReal.zero}
     \lean{MyReal.zero}
-    \uses{MyPrereal.R_equiv}
+    \uses{MyReal}
     \leanok
     We define the zero of $\MyReal$, denoted $0$ as $⟦ 0 ⟧$, i.e. the equivalence class of the prereal $0$.
 \end{definition}
@@ -362,7 +385,7 @@ $x R y$.
 \begin{definition}
     \label{MyReal.one}
     \lean{MyReal.one}
-    \uses{MyPrereal.R_equiv}
+    \uses{MyReal}
     \leanok
     We define the one of $\MyReal$, denoted $1$ as $⟦ 1 ⟧$, i.e. the equivalence class of the prereal $1$.
 \end{definition}
@@ -372,7 +395,7 @@ $x R y$.
 \begin{definition}
     \label{MyReal.neg}
     \lean{MyReal.neg}
-    \uses{MyPrereal.R_equiv, MyPrereal.neg_quotient}
+    \uses{MyReal, MyPrereal.neg, MyPrereal.neg_quotient}
     \leanok
 We define the negation of $a = ⟦ x ⟧$ as
 \[
@@ -384,7 +407,7 @@ Thanks to Lemma~\ref{MyPrereal.neg_quotient} this is well defined.
 \begin{definition}
     \label{MyReal.add}
     \lean{MyReal.add}
-    \uses{MyPrereal.R_equiv, MyPrereal.add_quotient}
+    \uses{MyReal, MyPrereal.add, MyPrereal.add_quotient}
     \leanok
 We define the addition of $a = ⟦ x ⟧$ and $b = ⟦ y ⟧$ as
 \[
@@ -396,7 +419,7 @@ Thanks to Lemma~\ref{MyPrereal.add_quotient} this is well defined.
 \begin{definition}
     \label{MyReal.mul}
     \lean{MyReal.mul}
-    \uses{MyPrereal.R_equiv, MyPrereal.mul_quotient}
+    \uses{MyReal, MyPrereal.mul, MyPrereal.mul_quotient}
     \leanok
 We define the multiplication of $a = ⟦ x ⟧$ and $b = ⟦ y ⟧$ as
 \[
@@ -408,7 +431,7 @@ Thanks to Lemma~\ref{MyPrereal.mul_quotient} this is well defined.
 \begin{definition}
     \label{MyReal.inv}
     \lean{MyReal.inv}
-    \uses{MyPrereal.R_equiv, MyPrereal.inv_quotient}
+    \uses{MyReal, MyPrereal.inv, MyPrereal.inv_quotient}
     \leanok
 We define the inverse of $a = ⟦ x ⟧$ as
 \[
@@ -420,6 +443,7 @@ Thanks to Lemma~\ref{MyPrereal.inv_quotient} this is well defined.
 \begin{proposition}[Commutative ring]
     \label{MyReal.commRing}
     \lean{MyReal.commRing}
+    \uses{MyReal}
     \leanok
     $\MyReal$ with addition and multiplication is a commutative ring.
 \end{proposition}
@@ -436,6 +460,7 @@ Thanks to Lemma~\ref{MyPrereal.inv_quotient} this is well defined.
 \begin{lemma}
     \label{MyReal.zero_ne_one}
     \lean{MyReal.zero_ne_one}
+    \uses{MyReal}
     \leanok
 In $\MyReal$ we have $0 \neq 1$.
 \end{lemma}
@@ -447,6 +472,7 @@ In $\MyReal$ we have $0 \neq 1$.
 \begin{lemma}
     \label{MyReal.mul_inv_cancel}
     \lean{MyReal.mul_inv_cancel}
+    \uses{MyReal}
     \leanok
 Let $x \neq 0$ be in $\MyReal$. Then $x \cdot x^{-1} = 1$.
 \end{lemma}
@@ -458,6 +484,7 @@ Let $x \neq 0$ be in $\MyReal$. Then $x \cdot x^{-1} = 1$.
 \begin{proposition}[Field]
     \label{MyReal.field}
     \lean{MyReal.field}
+    \uses{MyReal}
     \leanok
     $\MyReal$ with addition and multiplication is a field.
 \end{proposition}
@@ -470,7 +497,7 @@ Let $x \neq 0$ be in $\MyReal$. Then $x \cdot x^{-1} = 1$.
 \begin{definition}
     \label{MyReal.k}
     \lean{MyReal.k}
-    \uses{MyPrereal.IsCauchy.const}
+    \uses{MyReal, MyPrereal.IsCauchy.const}
     \leanok
     We define a map from rationals to constant sequences.
     \begin{gather*}
@@ -718,7 +745,7 @@ k(a \cdot b) = k(a) \cdot k(b)
 
 \begin{lemma}
     \labell{MyPrereal.eq_zero_of_isNonneg_of_isNonneg_neg}
-    \uses{MyPrereal.IsNonneg, MyPrereal.neg, MyPrereal.R_equiv}
+    \uses{MyPrereal.IsNonneg, MyPrereal.R_equiv}
     \leanok
     Let $x$ be a prereal.
     If $x$ is nonnegative and $-x$ is nonnegative, then $x \approx 0$.
@@ -729,7 +756,7 @@ k(a \cdot b) = k(a) \cdot k(b)
 
 \begin{lemma}
     \labell{MyPrereal.isNonneg_neg_of_not_isNonneg}
-    \uses{MyPrereal.IsNonneg, MyPrereal.neg}
+    \uses{MyPrereal.IsNonneg}
     \leanok
     Let $x$ be a prereal.
     If $x$ is not nonnegative then $-x$ is nonnegative.
@@ -742,7 +769,7 @@ k(a \cdot b) = k(a) \cdot k(b)
 
 \begin{definition}
     \labell{MyReal.IsNonneg}
-    \uses{MyPrereal.isNonneg_quotient, MyPrereal.IsNonneg}
+    \uses{MyReal, MyPrereal.isNonneg_quotient, MyPrereal.IsNonneg}
     \leanok
     We define nonnegativity on reals by lifting nonnegativity of prereals to the quotient.
 
@@ -792,17 +819,6 @@ k(a \cdot b) = k(a) \cdot k(b)
 \begin{proof}
     \leanok
 \end{proof}
-
-% \begin{lemma}
-%     \labell{MyReal.IsNonneg.inv}
-%     \uses{MyReal.IsNonneg, MyReal.inv}
-%     \leanok
-%     Let $x$ be in $\MyReal$ be nonnegative. Then $x^{-1}$ is nonnegative.
-% \end{lemma}
-% \begin{proof}
-%     \leanok
-%     Exercice.
-% \end{proof}
 
 \subsection{The order on reals}
 
@@ -1008,8 +1024,10 @@ k(a \cdot b) = k(a) \cdot k(b)
 
 \begin{proposition}[Strict order]
     \labell{MyReal.strictOrderedRing}
+    \uses{MyReal}
     \leanok
     We have that $\MyReal$ is a \emph{strict ordered ring}: a nontrivial ring with a partial order such that addition is strictly monotone and multiplication by a positive number is strictly monotone.
+\end{proposition}
 \begin{proof}
     \uses{MyReal.mul_pos}
     \leanok

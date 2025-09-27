@@ -167,7 +167,7 @@ lemma IsCauchy.neg {x : ℕ → MyRat} (hx : IsCauchy x) : IsCauchy (-x) := by
   rw [add_comm, ← sub_eq_add_neg]
   exact hx
 
-instance : Neg MyPrereal where
+instance neg : Neg MyPrereal where
   neg x := ⟨-x, x.2.neg⟩
 
 @[simp] lemma neg_def (x : ℕ → MyRat) (hx : IsCauchy x) : (-(⟨x, hx⟩ : MyPrereal)) = ⟨-x, hx.neg⟩ := by
@@ -203,10 +203,10 @@ lemma IsCauchy.add {x y : ℕ → MyRat} (hx : IsCauchy x) (hy : IsCauchy y) : I
   rw [show |x p + y p - (x q + y q)| = |x p - x q + (y p - y q)| by ring_nf]
   apply abs_add_le
 
-instance : Add MyPrereal where
+instance add : Add MyPrereal where
   add x y := ⟨x + y, x.2.add y.2⟩
 
-instance : Sub MyPrereal where
+instance sub : Sub MyPrereal where
   sub x y := x + -y
 
 @[simp] lemma add_def (x y : MyPrereal) (n : ℕ) : (x + y) n = x n + y n := by
@@ -280,7 +280,7 @@ lemma IsCauchy.mul {x y : ℕ → MyRat} (hx : IsCauchy x) (hy : IsCauchy y) : I
     simp
   · exact lt_sup_of_lt_left hBx.1
 
-instance : Mul MyPrereal where
+instance mul : Mul MyPrereal where
   mul x y := ⟨x * y, x.2.mul y.2⟩
 
 @[simp] lemma mul_def (x y : MyPrereal) (n : ℕ) : (x * y) n = x n * y n := by
